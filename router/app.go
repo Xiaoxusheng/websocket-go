@@ -1,4 +1,4 @@
-package controltion
+package router
 
 import (
 	"Gin/sever"
@@ -6,13 +6,16 @@ import (
 )
 
 // 控制层
-func User(r *gin.Engine) {
+func Router() *gin.Engine {
+	r := gin.Default()
 	User := r.Group("/user")
 	r.MaxMultipartMemory = 32
 	{
 		User.POST("/login", server.Login)
 		User.POST("/register", server.Register)
 		User.POST("/", server.Socket)
+		User.POST("/img", server.File)
 	}
 
+	return r
 }

@@ -2,6 +2,7 @@ package server
 
 import (
 	"Gin/db"
+	"Gin/models"
 	"crypto/md5"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -11,26 +12,11 @@ import (
 	"time"
 )
 
-// 注册
-type User struct {
-	ID       int    `json:"id"`
-	Username string `json:"username"`
-	Password string `json:"password"`
-	Status   int    `json:"status"`
-	Time     string `json:"time"`
-	Email    string `json:"email"`
-}
-type UserForm struct {
-	Use   string `json:"username" binding:"required" msg:"用户名不能为空"`
-	Pwd   string `json:"password" binding:"min=3,max=6" msg:"密码长度不能小于3大于6"`
-	Email string `json:"email"   binding:"email" msg:"邮箱地址格式不正确"`
-}
-
 // 业务实现层
 /*登录*/
 func Login(c *gin.Context) {
 	fmt.Println(c.FullPath())
-	var userfrom UserForm
+	var userfrom models.UserForm
 	userfrom.Use = c.PostForm("username")
 	userfrom.Pwd = c.PostForm("password")
 	data := []byte(userfrom.Pwd)
@@ -40,7 +26,7 @@ func Login(c *gin.Context) {
 	if userfrom.Use == "" || userfrom.Pwd == "" {
 		c.JSON(http.StatusBadRequest, Response{1, "", "用户登录失败，用户名或密码不能为空"})
 	} else {
-		var user []User
+		var user []models.User
 
 		err := db.DB.Select(&user, "select * from user where username=? and password=? ", userfrom.Use, md5pwd)
 		if err != nil {
@@ -83,7 +69,7 @@ func Register(c *gin.Context) {
 			"code": 1,
 		})
 	} else {
-		var user []User
+		var user []models.User
 
 		err := db.DB.Select(&user, "select * from user where username=?  ", use)
 		if err != nil {
@@ -95,7 +81,6 @@ func Register(c *gin.Context) {
 				"code": 1,
 			})
 		} else {
-
 			r, err := db.DB.Exec("insert into user(username,password,status,time ,email)values(?,?,?,?,?)", use, md5pwd, 0, time.Now().Format("2006--01--02 15:03:05"), email)
 			if err != nil {
 				log.Println("注册出错:", err)
