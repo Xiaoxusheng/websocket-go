@@ -1,9 +1,9 @@
 package db
 
 import (
-	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
+	"log"
 	"time"
 )
 
@@ -11,9 +11,9 @@ var DB *sqlx.DB
 
 func init() {
 
-	database, err := sqlx.Open("mysql", "root:admin123@tcp(127.0.0.1:3306)/new_schema")
+	database, err := sqlx.Open("mysql", "root:admin123@tcp(127.0.0.1:3306)/my_project")
 	if err != nil {
-		fmt.Println("open mysql failed,", err)
+		log.Println("open mysql failed,", err)
 		return
 	}
 	err = database.Ping()
@@ -31,6 +31,6 @@ func init() {
 	database.SetMaxIdleConns(10)
 
 	DB = database
-	fmt.Println("Mysql服务启动成功")
+	log.Println("Mysql服务启动成功")
 
 }

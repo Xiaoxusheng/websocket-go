@@ -1,9 +1,9 @@
-package redis
+package db
 
 import (
 	"context"
-	"fmt"
 	"github.com/go-redis/redis/v8"
+	"log"
 )
 
 /*
@@ -21,7 +21,10 @@ func init() {
 	})
 	ctx := context.Background()
 	ping := client.Ping(ctx)
-	fmt.Println(ping)
-	Rdb = client
+	if ping.String() == "ping: PONG" {
+		//fmt.Println(ping.String())
+		log.Println("连接redis 成功!")
+	}
 
+	Rdb = client
 }
