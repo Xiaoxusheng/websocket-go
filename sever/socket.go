@@ -1,7 +1,7 @@
 package server
 
 import (
-	"Gin/redis"
+	"Gin/db"
 	"context"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -16,11 +16,11 @@ func Socket(c *gin.Context) {
 	})
 
 	ctx := context.Background()
-	err := redis.Rdb.Set(ctx, "name", "leilong", 0).Err()
+	err := db.Rdb.Set(ctx, "name", "leilong", 0).Err()
 	if err != nil {
 		log.Println(err)
 	}
-	val := redis.Rdb.Get(ctx, "name")
+	val := db.Rdb.Get(ctx, "name")
 	fmt.Println(val)
 
 }

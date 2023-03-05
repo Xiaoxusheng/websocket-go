@@ -6,5 +6,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="goserve" />
+    <orderEntry type="module" module-name="QQbat_go" />
   </component>
 </module>

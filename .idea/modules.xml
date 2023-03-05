@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Gin.iml" filepath="$PROJECT_DIR$/.idea/Gin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../QQbat_go/.idea/QQbat_go.iml" filepath="$PROJECT_DIR$/../QQbat_go/.idea/QQbat_go.iml" />
       <module fileurl="file://$PROJECT_DIR$/../goserve/.idea/goserve.iml" filepath="$PROJECT_DIR$/../goserve/.idea/goserve.iml" />
     </modules>
   </component>
