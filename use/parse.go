@@ -1,6 +1,7 @@
 package use
 
 import (
+<<<<<<< HEAD
 	"Gin/db"
 	"Gin/utility"
 	"fmt"
@@ -56,4 +57,12 @@ func AuthontokenParse() gin.HandlerFunc {
 
 	}
 
+=======
+	"fmt"
+	"github.com/gin-gonic/gin"
+)
+
+func Yanzheng(c *gin.Context) {
+	fmt.Println("122")
+>>>>>>> origin/master
 }
