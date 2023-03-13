@@ -24,7 +24,6 @@ func emails() {
 	//主题
 	e.Subject = "登录验证码"
 	rand.Seed(time.Now().UnixNano())
-	rand.Int63()
 	for i := 0; i < 6; i++ {
 		str += strconv.FormatInt(rand.Int63n(10), 10)
 	}

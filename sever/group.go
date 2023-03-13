@@ -10,7 +10,17 @@ import (
 	"time"
 )
 
+// PingExample godoc
 // 创建群聊
+// @Summary 创建群聊接口
+// @Param token header string true "token"
+// @Schemes
+// @Description  token 为必填
+// @Tags 公共方法
+// @Accept json
+// @Produce json
+// @Success 200 {string} { "code": 200,"msg": "创建群聊成功,群号为:8660920"}
+// @Router  /group/groupr  [post]
 func CreateGroup(c *gin.Context) {
 	//获取token里面的idently
 	token := c.GetHeader("token")
@@ -61,7 +71,18 @@ func CreateGroup(c *gin.Context) {
 
 }
 
+// PingExample godoc
 // 加入群聊
+// @Summary 加入群聊接口
+// @Param room_id header string true "群号"
+// @Param token header string true "token"
+// @Schemes
+// @Description room_id token 为必填
+// @Tags 公共方法
+// @Accept json
+// @Produce json
+// @Success 200 {string} {"code": 200, "msg": "加入群聊成功！"}
+// @Router  /group/join  [post]
 func JoinGroup(c *gin.Context) {
 	room_id := c.Query("room_id")
 	token := c.GetHeader("token")

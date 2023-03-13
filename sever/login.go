@@ -10,8 +10,18 @@ import (
 	"net/http"
 )
 
-// 业务实现层
-/*登录*/
+// PingExample godoc
+// @Summary 登录接口
+// @Param username formData string true "用户名"
+// @Param password formData string true "密码"
+// @Param code  formData string true "验证码"
+// @Schemes
+// @Description 用户名 密码为必填
+// @Tags 公共方法
+// @Accept json
+// @Produce json
+// @Success 200 {string} { "code": 200, "msg": "登陆成功", "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbmRlbnRseSI6IjZhMmE0NjJjLWExMDctNDhlYS04MmU1LTc0ZTMwODMyN2U2ZiIsInVzZXJuYW1lIjoiYWRtaW4iLCJpc3MiOiJ0ZXN0IiwiZXhwIjoxNjc4Nzg2NTM1fQ.P4dJ_f2UGhKbpiIqHxTxghRKwKIlCpF2XjryHCSnKKk" }
+// @Router /user/login [post]
 func Login(c *gin.Context) {
 	fmt.Println(c.FullPath())
 	username := c.PostForm("username")
@@ -37,7 +47,7 @@ func Login(c *gin.Context) {
 			})
 			return
 		}
-		//fmt.Println(c.GetInt("status"))
+		fmt.Println(c.GetInt("status"))
 		//fmt.Print(len(getidently))
 		if len(getidently) == 0 {
 			c.JSON(http.StatusBadRequest, gin.H{
@@ -65,10 +75,22 @@ func Login(c *gin.Context) {
 }
 
 // 注册
+// PingExample godoc
+// @Summary 注册接口
+// @Param username formData string true "用户名"
+// @Param password formData string true "密码"
+// @Param email  formData string true "邮箱"
+// @Schemes
+// @Description 用户名 密码 邮箱为必填
+// @Tags 公共方法
+// @Accept json
+// @Produce json
+// @Success 200 {string} { "account": "3169387148", "code": 200, "msg": "注册成功" }
+// @Router /user/register  [post]
 func Register(c *gin.Context) {
 	fmt.Println(c.FullPath())
 	var Register models.LoginForm
-	use := c.PostForm("username")
+	//use := c.PostForm("username")
 	err := c.ShouldBind(&Register)
 	if err != nil {
 		log.Println(err)
@@ -82,7 +104,7 @@ func Register(c *gin.Context) {
 	//pwd := c.PostForm("password")
 	//email := c.PostForm("email")
 	fmt.Println(Register)
-	fmt.Println(use)
+	//fmt.Println(use)
 
 	if Register.Username == "" || Register.Password == "" || Register.Email == "" {
 		c.JSON(http.StatusBadRequest, gin.H{

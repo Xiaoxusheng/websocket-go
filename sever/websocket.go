@@ -17,6 +17,16 @@ var upgrader = websocket.Upgrader{
 }
 var client = make(map[string]*websocket.Conn)
 
+// websocket
+// PingExample godoc
+// @Summary  websocket连接接口
+// @Param token header string true "token"
+// @Schemes
+// @Description  token 邮箱为必填
+// @Tags 公共方法
+// @Accept json
+// @Produce json
+// @Router   /user/websocket       [get]
 func Websecket(c *gin.Context) {
 	message := &models.Message{}
 	token := c.GetHeader("token")

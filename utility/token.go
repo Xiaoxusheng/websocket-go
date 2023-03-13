@@ -14,8 +14,8 @@ type User struct {
 	*jwt.RegisteredClaims
 }
 
+// Createtoken 生成token
 func Createtoken(indently string, username string) string {
-
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, &User{indently, username, &jwt.RegisteredClaims{ExpiresAt: jwt.NewNumericDate(time.Now().Add(24 * time.Hour)), Issuer: "test"}})
 	signedString, err := token.SignedString(Key)
 	if err != nil {
@@ -24,7 +24,7 @@ func Createtoken(indently string, username string) string {
 	return signedString
 }
 
-// 验证token
+// ParseWithClaims 验证token
 func ParseWithClaims(tokenString string) (*User, error) {
 	if tokenString == "" {
 		return nil, errors.New("token不能为空！")

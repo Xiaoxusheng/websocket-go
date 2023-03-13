@@ -22,7 +22,7 @@ type Userroom struct {
 	Room_type   string `json:"room_type"`
 }
 
-// 加入群聊
+// InsertUseridently 加入群聊
 func InsertUseridently(user_room *User_room) error {
 	_, err := db.DB.Exec("insert into user_room (useridently,roomidently,create_time,update_time,room_type) value (?,?,?,?,?)", user_room.Useridently, user_room.Roomidently, user_room.Create_time, user_room.Update_time, user_room.Room_type)
 	if err != nil {
@@ -31,7 +31,7 @@ func InsertUseridently(user_room *User_room) error {
 	return nil
 }
 
-// 查
+// GetUserbyIdentlyRoomId 查
 func GetUserbyIdentlyRoomId(roomidently string) []User_room {
 	fmt.Println(roomidently)
 	user_room := []User_room{}
@@ -44,10 +44,13 @@ func GetUserbyIdentlyRoomId(roomidently string) []User_room {
 	return user_room
 }
 
-// 加好友
-func PrivateInsertUseridently(idently1, idently2 string) {
-	db.DB.Exec("insert into user_room (useridently,roomidently,create_time,update_time,room_type) value (?,?,?,?,?)")
-
+// PrivateInsertUseridently 加好友
+func PrivateInsertUseridently(use1 User_room) error {
+	_, err := db.DB.Exec("insert into user_room (useridently,roomidently,create_time,update_time,room_type) value (?,?,?,?,?)", use1.Useridently, use1.Roomidently, use1.Create_time, use1.Room_type)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 // 是否已经互为好友
@@ -63,9 +66,23 @@ func GetOther(indently1, indently2 string) (bool, error) {
 	if err != nil {
 		return true, err
 	}
-
+	fmt.Println(user_room1, user_room2)
 	if user_room1.Roomidently == user_room2.Roomidently {
 		return true, nil
 	}
 	return false, nil
+}
+
+// 删除
+func Del(indently1, indently2 string) error {
+	exec, err := db.DB.Exec("delete from user_room where useridently=?", indently1)
+	if err != nil {
+		return err
+	}
+	fmt.Println(exec)
+	exec, err = db.DB.Exec("delete from user_room where useridently=?", indently2)
+	if err != nil {
+		return err
+	}
+	return nil
 }

@@ -51,7 +51,7 @@ func SelectGroupNumber(create_uesr, types string) int {
 
 }
 
-// 获取房间是否存在
+// GetRoomId 获取房间是否存在
 func GetRoomId(roomidently string) bool {
 	room := Room_id{}
 	err := db.DB.Get(&room, "select * from room_id where roomidently =?", roomidently)
@@ -61,5 +61,22 @@ func GetRoomId(roomidently string) bool {
 	}
 	fmt.Println(room)
 	return true
+}
 
+func DelGroup(id string) error {
+	_, err := db.DB.Exec("delete from room_id where roomidently=? ", id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// GetRoom 获取房间号
+func GetRoom(indently string) (string, error) {
+	room := Room_id{}
+	err := db.DB.Get(&room, "select * from room_id where useridently =?", indently)
+	if err != nil {
+		return "", err
+	}
+	return room.Roomidently, nil
 }

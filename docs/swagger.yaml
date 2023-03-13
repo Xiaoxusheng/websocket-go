@@ -1,0 +1,226 @@
+info:
+  contact: { }
+paths:
+  /group/groupr:
+    post:
+      consumes:
+        - application/json
+      description: token 为必填
+      parameters:
+        - description: token
+          in: header
+          name: token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: 'code": 200,"msg": "创建群聊成功,群号为:8660920"}'
+          schema:
+            type: string
+      summary: 创建群聊接口
+      tags:
+        - 公共方法
+  /group/join:
+    post:
+      consumes:
+        - application/json
+      description: room_id token 为必填
+      parameters:
+        - description: 群号
+          in: header
+          name: room_id
+          required: true
+          type: string
+        - description: token
+          in: header
+          name: token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: 'code": 200, "msg": "加入群聊成功！"}'
+          schema:
+            type: string
+      summary: 加入群聊接口
+      tags:
+        - 公共方法
+  /user/delete:
+    get:
+      consumes:
+        - application/json
+      description: 用户名 token 邮箱为必填
+      parameters:
+        - description: 账号
+          in: query
+          name: account
+          required: true
+          type: string
+        - description: token
+          in: header
+          name: token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: code":200,"msg":"删除成功！"}
+          schema:
+            type: string
+      summary: 删除好友接口
+      tags:
+        - 公共方法
+    post:
+      consumes:
+        - application/json
+      description: |-
+        上传文件
+        file 为必填
+      parameters:
+        - description: 表单name
+          in: formData
+          name: file
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: code":1,"msg":"\u0001个文件上传成功","url":"127.0.0.1:8080/img/12.png"}
+          schema:
+            type: string
+      summary: 上传文件接口
+      tags:
+        - 公共方法
+  /user/join:
+    get:
+      consumes:
+        - application/json
+      description: 用户名 token 邮箱为必填
+      parameters:
+        - description: 账号
+          in: query
+          name: account
+          required: true
+          type: string
+        - description: token
+          in: header
+          name: token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: code":200,"msg":"添加好友成功！"}
+          schema:
+            type: string
+      summary: 添加好友接口
+      tags:
+        - 公共方法
+  /user/login:
+    post:
+      consumes:
+        - application/json
+      description: 用户名 密码为必填
+      parameters:
+        - description: 用户名
+          in: formData
+          name: username
+          required: true
+          type: string
+        - description: 密码
+          in: formData
+          name: password
+          required: true
+          type: string
+        - description: 验证码
+          in: formData
+          name: code
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: 'code": 200, "msg": "登陆成功", "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbmRlbnRseSI6IjZhMmE0NjJjLWExMDctNDhlYS04MmU1LTc0ZTMwODMyN2U2ZiIsInVzZXJuYW1lIjoiYWRtaW4iLCJpc3MiOiJ0ZXN0IiwiZXhwIjoxNjc4Nzg2NTM1fQ.P4dJ_f2UGhKbpiIqHxTxghRKwKIlCpF2XjryHCSnKKk"
+            }'
+          schema:
+            type: string
+      summary: 登录接口
+      tags:
+        - 公共方法
+  /user/register:
+    post:
+      consumes:
+        - application/json
+      description: 用户名 密码 邮箱为必填
+      parameters:
+        - description: 用户名
+          in: formData
+          name: username
+          required: true
+          type: string
+        - description: 密码
+          in: formData
+          name: password
+          required: true
+          type: string
+        - description: 邮箱
+          in: formData
+          name: email
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: 'account": "3169387148", "code": 200, "msg": "注册成功" }'
+          schema:
+            type: string
+      summary: 注册接口
+      tags:
+        - 公共方法
+  /user/send_code:
+    get:
+      consumes:
+        - application/json
+      description: 用户名 为必填
+      parameters:
+        - description: 用户名
+          in: query
+          name: username
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: 'code": "530757", "msg": "获取验证码成功！" }'
+          schema:
+            type: string
+      summary: 验证码接口
+      tags:
+        - 公共方法
+  /user/websocket:
+    get:
+      consumes:
+        - application/json
+      description: token 邮箱为必填
+      parameters:
+        - description: token
+          in: header
+          name: token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses: { }
+      summary: websocket连接接口
+      tags:
+        - 公共方法
+swagger: "2.0"

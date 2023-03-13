@@ -8,8 +8,19 @@ import (
 	"os"
 )
 
+// 上传文件
+// PingExample godoc
+// @Summary  上传文件接口
+// @Schemes
+// @Param file formData string true "表单name"
+// @Description 上传文件
+// @Description file 为必填
+// @Tags 公共方法
+// @Accept json
+// @Produce json
+// @Success 200 {string} {"code":1,"msg":"\u0001个文件上传成功","url":"127.0.0.1:8080/img/12.png"}
+// @Router  /user/delete      [post]
 func File(c *gin.Context) {
-
 	var filename string
 	fileslice := make([]string, 10)
 	form, err := c.MultipartForm()

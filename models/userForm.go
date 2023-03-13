@@ -13,7 +13,7 @@ import (
 type User struct {
 	Indently      string `db:"indently" `
 	Username      string `db:"username"  `
-	Password      string `db:"password" "`
+	Password      string `db:"password" `
 	Use_status    int    `db:"use_status" `
 	Register_time string `db:"register_time" `
 	Email         string `db:"email" `
@@ -48,7 +48,7 @@ func Getidently(username, password string) ([]User, error) {
 
 // 插入数据
 func InsetuserLoginForm(Register LoginForm, account string) (sql.Result, error) {
-	r, err := db.DB.Exec("insert into user(idently,username,password,use_status,register_time ,email,account)values(?,?,?,?,?,?,?)", utility.Uuid(), Register.Username, utility.Createmd5(Register.Password), 0, time.Now().Format("2006--01--02 15:03:05"), Register.Email, account)
+	r, err := db.DB.Exec("insert into user(indently,username,password,use_status,register_time ,email,account)values(?,?,?,?,?,?,?)", utility.Uuid(), Register.Username, utility.Createmd5(Register.Password), 0, time.Now().Format("2006--01--02 15:03:05"), Register.Email, account)
 	if err != nil {
 		log.Println("注册出错:", err)
 		return nil, err
@@ -61,7 +61,7 @@ func InsetuserLoginForm(Register LoginForm, account string) (sql.Result, error) 
 func GetUsername(useridently string) (string, error) {
 	var use User
 	//fmt.Println(useridently)
-	err := db.DB.Get(&use, "select * from user where idently=?", useridently)
+	err := db.DB.Get(&use, "select * from user where indently=?", useridently)
 	if err != nil {
 		//log.Println("查询出错:", err)
 		return "", err
