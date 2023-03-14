@@ -15,11 +15,50 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/group/groupr": {
-            "post": {
-                "description": "token 为必填",
+        "/group/exit": {
+            "get": {
+                "description": "room_id token 为必填",
                 "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "公共方法"
+                ],
+                "summary": "退出群聊接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "群号",
+                        "name": "room_id",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\":200,\"msg\":\"退出成功！\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/group": {
+            "post": {
+                "description": "info token 为必填",
+                "consumes": [
+                    "multipart/form-data"
                 ],
                 "produces": [
                     "application/json"
@@ -35,6 +74,13 @@ const docTemplate = `{
                         "name": "token",
                         "in": "header",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "群名称",
+                        "name": "info",
+                        "in": "formData",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -47,11 +93,43 @@ const docTemplate = `{
                 }
             }
         },
+        "/group/grouplist": {
+            "get": {
+                "description": "room_id  为必填",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "公共方法"
+                ],
+                "summary": "获取群成员列表接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "群号",
+                        "name": "room_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\":200,\"msg\":\"退出成功！\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/group/join": {
             "post": {
                 "description": "room_id token 为必填",
                 "consumes": [
-                    "application/json"
+                    "multipart/form-data"
                 ],
                 "produces": [
                     "application/json"
@@ -65,7 +143,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "群号",
                         "name": "room_id",
-                        "in": "header",
+                        "in": "formData",
                         "required": true
                     },
                     {
@@ -155,6 +233,38 @@ const docTemplate = `{
                 }
             }
         },
+        "/user/friendlist": {
+            "get": {
+                "description": "token 为必填",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "公共方法"
+                ],
+                "summary": "好友列表接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\":200,\"msg\":\"删除成功！\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/user/join": {
             "get": {
                 "description": "用户名 token 邮箱为必填",
@@ -198,7 +308,7 @@ const docTemplate = `{
             "post": {
                 "description": "用户名 密码为必填",
                 "consumes": [
-                    "application/json"
+                    "multipart/form-data"
                 ],
                 "produces": [
                     "application/json"
@@ -244,7 +354,7 @@ const docTemplate = `{
             "post": {
                 "description": "用户名 密码 邮箱为必填",
                 "consumes": [
-                    "application/json"
+                    "multipart/form-data"
                 ],
                 "produces": [
                     "application/json"

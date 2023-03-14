@@ -51,9 +51,9 @@ func JoinPrivate(c *gin.Context) {
 		return
 	}
 	//是否已经为好友
-	other, err := models.GetOther(u.Indently, use.Indently)
-	fmt.Println(other, err)
-	if other && err == nil {
+	other := models.GetOther(u.Indently, use.Indently)
+	fmt.Println(other)
+	if other {
 		c.JSON(http.StatusOK, gin.H{
 			"code": 1,
 			"msg":  "已经互为好友！",
@@ -62,7 +62,7 @@ func JoinPrivate(c *gin.Context) {
 	}
 	//房间号
 	id := utility.GetRoomId()
-	err = models.InsertUseridently(&models.User_room{use.Indently, id, time.Now().Unix(), time.Now().Unix(), "private"})
+	err = models.InsertUseridently(&models.User_room{use.Indently, id, time.Now().Unix(), time.Now().Unix(), "private", u.Indently})
 	if err != nil {
 		log.Println("1", err)
 		c.JSON(http.StatusOK, gin.H{
@@ -71,15 +71,8 @@ func JoinPrivate(c *gin.Context) {
 		})
 		return
 	}
-	mc, err := models.GetUserByaccount(account)
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": 1,
-			"msg":  "系统错误！",
-		})
-		return
-	}
-	err = models.InsertUseridently(&models.User_room{mc.Indently, id, time.Now().Unix(), time.Now().Unix(), "private"})
+
+	err = models.InsertUseridently(&models.User_room{u.Indently, id, time.Now().Unix(), time.Now().Unix(), "private", use.Indently})
 	if err != nil {
 		log.Println("2", err)
 		c.JSON(http.StatusOK, gin.H{
@@ -90,7 +83,7 @@ func JoinPrivate(c *gin.Context) {
 	}
 
 	//
-	f := models.CreateRoom(&models.Room_id{id, use.Indently, "private", time.Now().Unix(), use.Username, mc.Username})
+	f := models.CreateRoom(&models.Room_id{id, use.Indently, "private", time.Now().Unix(), use.Username, u.Username})
 	if f {
 		c.JSON(http.StatusOK, gin.H{
 			"code": 200,
@@ -140,9 +133,9 @@ func DelPrivate(c *gin.Context) {
 		return
 	}
 	//是否已经为好友
-	other, err := models.GetOther(mc.Indently, use.Indently)
-	fmt.Println(other, err)
-	if !(other && err == nil) {
+	other := models.GetOther(mc.Indently, use.Indently)
+	fmt.Println(other)
+	if !other {
 		c.JSON(http.StatusOK, gin.H{
 			"code": 1,
 			"msg":  "不是好友关系！",
@@ -155,7 +148,7 @@ func DelPrivate(c *gin.Context) {
 		log.Println(err)
 		c.JSON(http.StatusOK, gin.H{
 			"code": 1,
-			"msg":  "系统错误！",
+			"msg":  "删除错误！",
 		})
 		return
 	}
@@ -174,12 +167,52 @@ func DelPrivate(c *gin.Context) {
 		log.Println(err)
 		c.JSON(http.StatusOK, gin.H{
 			"code": 1,
-			"msg":  "系统错误！",
+			"msg":  "系统错误！" + err.Error(),
 		})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"code": 200,
 		"msg":  "删除成功！",
+	})
+}
+
+// Friendlist
+// PingExample godoc
+// @Summary  好友列表接口
+// @Param token header string true "token"
+// @Schemes
+// @Description  token 为必填
+// @Tags 公共方法
+// @Accept json
+// @Produce json
+// @Success 200 {string} {"code":200,"msg":"删除成功！"}
+// @Router  /user/friendlist      [get]
+func Friendlist(c *gin.Context) {
+	token := c.GetHeader("token")
+	use, err := utility.ParseWithClaims(token)
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"code": 1,
+			"msg":  "系统错误！" + err.Error(),
+		})
+		return
+	}
+	frieendlist := models.GetFriendList(use.Indently)
+	user := make([]*models.User, 0)
+	for _, userroom := range frieendlist {
+		username, err := models.GetUsername(userroom.Friendidently)
+		if err != nil {
+			return
+		}
+		user = append(user, username)
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"msg":  "获取数据成功！",
+		"data": gin.H{
+			"data": user,
+		},
 	})
 }

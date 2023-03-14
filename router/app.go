@@ -24,13 +24,15 @@ func Router() *gin.Engine {
 		User.GET("/websocket", server.Websecket)
 		User.GET("/join", server.JoinPrivate)
 		User.GET("/delete", server.DelPrivate)
+		User.GET("friendlist", server.Friendlist)
 	}
 	// 群聊
 	Group := r.Group("/group")
 	{
 		Group.POST("/group", server.CreateGroup)
 		Group.GET("/join", server.JoinGroup)
-		Group.GET("/delete")
+		Group.GET("/exit", server.ExitGroup)
+		Group.GET("/grouplist", server.GetGroupList)
 	}
 
 	// 管理员,

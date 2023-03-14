@@ -13,7 +13,6 @@ import (
 func VerifyEmail() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		username := c.PostForm("username")
-		fmt.Println("username:", username)
 		code := c.PostForm("code")
 		ctx := context.Background()
 		result, err := db.Rdb.HMGet(ctx, username, "username", "time", "randString").Result()

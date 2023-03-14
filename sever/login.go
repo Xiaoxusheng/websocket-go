@@ -18,7 +18,7 @@ import (
 // @Schemes
 // @Description 用户名 密码为必填
 // @Tags 公共方法
-// @Accept json
+// @Accept multipart/form-data
 // @Produce json
 // @Success 200 {string} { "code": 200, "msg": "登陆成功", "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbmRlbnRseSI6IjZhMmE0NjJjLWExMDctNDhlYS04MmU1LTc0ZTMwODMyN2U2ZiIsInVzZXJuYW1lIjoiYWRtaW4iLCJpc3MiOiJ0ZXN0IiwiZXhwIjoxNjc4Nzg2NTM1fQ.P4dJ_f2UGhKbpiIqHxTxghRKwKIlCpF2XjryHCSnKKk" }
 // @Router /user/login [post]
@@ -83,7 +83,7 @@ func Login(c *gin.Context) {
 // @Schemes
 // @Description 用户名 密码 邮箱为必填
 // @Tags 公共方法
-// @Accept json
+// @Accept multipart/form-data
 // @Produce json
 // @Success 200 {string} { "account": "3169387148", "code": 200, "msg": "注册成功" }
 // @Router /user/register  [post]
@@ -92,6 +92,7 @@ func Register(c *gin.Context) {
 	var Register models.LoginForm
 	//use := c.PostForm("username")
 	err := c.ShouldBind(&Register)
+	fmt.Println(Register)
 	if err != nil {
 		log.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{

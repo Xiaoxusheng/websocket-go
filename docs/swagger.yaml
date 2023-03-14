@@ -1,15 +1,46 @@
 info:
   contact: { }
 paths:
-  /group/groupr:
+  /group/exit:
+    get:
+      consumes:
+        - multipart/form-data
+      description: room_id token 为必填
+      parameters:
+        - description: 群号
+          in: header
+          name: room_id
+          required: true
+          type: string
+        - description: token
+          in: header
+          name: token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: code":200,"msg":"退出成功！"}
+          schema:
+            type: string
+      summary: 退出群聊接口
+      tags:
+        - 公共方法
+  /group/group:
     post:
       consumes:
-        - application/json
-      description: token 为必填
+        - multipart/form-data
+      description: info token 为必填
       parameters:
         - description: token
           in: header
           name: token
+          required: true
+          type: string
+        - description: 群名称
+          in: formData
+          name: info
           required: true
           type: string
       produces:
@@ -22,14 +53,35 @@ paths:
       summary: 创建群聊接口
       tags:
         - 公共方法
+  /group/grouplist:
+    get:
+      consumes:
+        - multipart/form-data
+      description: room_id  为必填
+      parameters:
+        - description: 群号
+          in: query
+          name: room_id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: code":200,"msg":"退出成功！"}
+          schema:
+            type: string
+      summary: 获取群成员列表接口
+      tags:
+        - 公共方法
   /group/join:
     post:
       consumes:
-        - application/json
+        - multipart/form-data
       description: room_id token 为必填
       parameters:
         - description: 群号
-          in: header
+          in: formData
           name: room_id
           required: true
           type: string
@@ -96,6 +148,27 @@ paths:
       summary: 上传文件接口
       tags:
         - 公共方法
+  /user/friendlist:
+    get:
+      consumes:
+        - application/json
+      description: token 为必填
+      parameters:
+        - description: token
+          in: header
+          name: token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: code":200,"msg":"删除成功！"}
+          schema:
+            type: string
+      summary: 好友列表接口
+      tags:
+        - 公共方法
   /user/join:
     get:
       consumes:
@@ -125,7 +198,7 @@ paths:
   /user/login:
     post:
       consumes:
-        - application/json
+        - multipart/form-data
       description: 用户名 密码为必填
       parameters:
         - description: 用户名
@@ -157,7 +230,7 @@ paths:
   /user/register:
     post:
       consumes:
-        - application/json
+        - multipart/form-data
       description: 用户名 密码 邮箱为必填
       parameters:
         - description: 用户名

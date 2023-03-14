@@ -57,16 +57,16 @@ func InsetuserLoginForm(Register LoginForm, account string) (sql.Result, error) 
 	return r, nil
 }
 
-// 查询用户名
-func GetUsername(useridently string) (string, error) {
+// 根据useridently查询用户信息
+func GetUsername(useridently string) (*User, error) {
 	var use User
 	//fmt.Println(useridently)
 	err := db.DB.Get(&use, "select * from user where indently=?", useridently)
 	if err != nil {
 		//log.Println("查询出错:", err)
-		return "", err
+		return nil, err
 	}
-	return use.Username, nil
+	return &use, nil
 }
 
 // 根据account获取用户信息
