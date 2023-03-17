@@ -15,11 +15,11 @@ import (
 // @Param account query string true "账号"
 // @Param token header string true "token"
 // @Schemes
-// @Description 用户名 token 邮箱为必填
+// @Description 账号 token 为必填
 // @Tags 公共方法
 // @Accept json
 // @Produce json
-// @Success 200 {string} {"code":200,"msg":"添加好友成功！"}
+// @Success 200 {string}  "{"code":200,"msg":"添加好友成功！"}"
 // @Router  /user/join    [get]
 func JoinPrivate(c *gin.Context) {
 	//好友的account
@@ -98,11 +98,11 @@ func JoinPrivate(c *gin.Context) {
 // @Param account query string true "账号"
 // @Param token header string true "token"
 // @Schemes
-// @Description 用户名 token 邮箱为必填
+// @Description  token 账号为必填
 // @Tags 公共方法
 // @Accept json
 // @Produce json
-// @Success 200 {string} {"code":200,"msg":"删除成功！"}
+// @Success 200 {string}  "{"code":200,"msg":"删除成功！"}"
 // @Router  /user/delete      [get]
 func DelPrivate(c *gin.Context) {
 	account := c.Query("account")
@@ -186,8 +186,8 @@ func DelPrivate(c *gin.Context) {
 // @Tags 公共方法
 // @Accept json
 // @Produce json
-// @Success 200 {string} {"code":200,"msg":"删除成功！"}
-// @Router  /user/friendlist      [get]
+// @Success 200 {string}  "{ "code": 200, "data": {"data": [    {"Indently": "6a2a462c-a107-48ea-82e5-74e308327e6f", "Username": "admin", "Password": "21232f297a57a5a743894a0e4a801fc3", "Use_status": 0, "Register_time": "2023-03-13 17:05:08","Email": "3096407764@qq.com", "account": "3169387148"}]}, "msg": "获取数据成功！"}"
+// @Router  /user/friend_list      [get]
 func Friendlist(c *gin.Context) {
 	token := c.GetHeader("token")
 	use, err := utility.ParseWithClaims(token)

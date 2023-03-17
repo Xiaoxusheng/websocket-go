@@ -19,13 +19,14 @@ func (r Room_id) GetRoomidently() string {
 	return "Room_id"
 }
 
-func GetRoomidentlyUser(roomidently *Room_id) {
-	room := &Room_id{}
-	err := db.DB.Select(room, "select * from  roomidently where roomidently=?,", roomidently)
+func GetUserByUserindently(useridently string) *[]Room_id {
+	room := []Room_id{}
+	err := db.DB.Select(&room, "select * from room_id where useridently=?", useridently)
 	if err != nil {
-		return
+		log.Println(err)
+		return nil
 	}
-
+	return &room
 }
 
 // 创建群聊
@@ -79,4 +80,15 @@ func GetRoom(indently string) (string, error) {
 		return "", err
 	}
 	return room.Roomidently, nil
+}
+
+// 判断是否为群主
+func GetGroupLord(indently string) []Room_id {
+	room := []Room_id{}
+	err := db.DB.Select(&room, "select * from room_id where useridently =? and room_type=?", indently, "group")
+	if err != nil {
+		log.Println("SELECT ERR:", err)
+		return nil
+	}
+	return room
 }

@@ -34,9 +34,9 @@ func InsertUseridently(user_room *User_room) error {
 }
 
 // GetUserbyIdentlyRoomId 查
-func GetUserbyIdentlyRoomId(roomidently string) []User_room {
+func GetUserbyIdentlyRoomId(roomidently string) []Userroom {
 	fmt.Println(roomidently)
-	user_room := []User_room{}
+	user_room := []Userroom{}
 	err := db.DB.Select(&user_room, "select * from user_room where  roomidently=?", roomidently)
 	if err != nil {
 		log.Println(err)
@@ -113,6 +113,7 @@ func ExitGroupUser(indently, room_id string) error {
 	if err != nil {
 		return err
 	}
+
 	return nil
 }
 
@@ -128,6 +129,7 @@ func GetFriendList(indently string) []Userroom {
 	return user_room
 }
 
+// 判断是否为群主
 func GetGroupList(room_id string) []Userroom {
 	user_room := []Userroom{}
 	err := db.DB.Select(&user_room, "select * from user_room  where roomidently=? and room_type=? ", room_id, "group")
@@ -137,4 +139,14 @@ func GetGroupList(room_id string) []Userroom {
 	}
 	//fmt.Println(user_room)
 	return user_room
+}
+
+// 解散群聊
+func DissolveGroup(room_id string) error {
+	_, err := db.DB.Exec("delete from user_room where roomidently=? ", room_id)
+	if err != nil {
+		return err
+	}
+	return nil
+
 }

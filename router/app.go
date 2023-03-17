@@ -13,7 +13,7 @@ import (
 func Router() *gin.Engine {
 	r := gin.Default()
 	// 公共方法
-	User := r.Group("/user")
+	User := r.Group("/user", use.IPLimite())
 	docs.SwaggerInfo.BasePath = ""
 	r.MaxMultipartMemory = 32
 	{
@@ -24,7 +24,8 @@ func Router() *gin.Engine {
 		User.GET("/websocket", server.Websecket)
 		User.GET("/join", server.JoinPrivate)
 		User.GET("/delete", server.DelPrivate)
-		User.GET("friendlist", server.Friendlist)
+		User.GET("friend_list", server.Friendlist)
+		User.GET("/get_message", server.ChatRecord)
 	}
 	// 群聊
 	Group := r.Group("/group")

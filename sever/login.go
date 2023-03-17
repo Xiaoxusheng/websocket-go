@@ -16,11 +16,11 @@ import (
 // @Param password formData string true "密码"
 // @Param code  formData string true "验证码"
 // @Schemes
-// @Description 用户名 密码为必填
+// @Description 用户名 密码 验证码为必填
 // @Tags 公共方法
 // @Accept multipart/form-data
 // @Produce json
-// @Success 200 {string} { "code": 200, "msg": "登陆成功", "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbmRlbnRseSI6IjZhMmE0NjJjLWExMDctNDhlYS04MmU1LTc0ZTMwODMyN2U2ZiIsInVzZXJuYW1lIjoiYWRtaW4iLCJpc3MiOiJ0ZXN0IiwiZXhwIjoxNjc4Nzg2NTM1fQ.P4dJ_f2UGhKbpiIqHxTxghRKwKIlCpF2XjryHCSnKKk" }
+// @Success 200 {string}    "{"code": 200, "msg": "登陆成功", "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbmRlbnRseSI6IjZhMmE0NjJjLWExMDctNDhlYS04MmU1LTc0ZTMwODMyN2U2ZiIsInVzZXJuYW1lIjoiYWRtaW4iLCJpc3MiOiJ0ZXN0IiwiZXhwIjoxNjc4Nzg2NTM1fQ.P4dJ_f2UGhKbpiIqHxTxghRKwKIlCpF2XjryHCSnKKk"}"
 // @Router /user/login [post]
 func Login(c *gin.Context) {
 	fmt.Println(c.FullPath())
@@ -85,7 +85,7 @@ func Login(c *gin.Context) {
 // @Tags 公共方法
 // @Accept multipart/form-data
 // @Produce json
-// @Success 200 {string} { "account": "3169387148", "code": 200, "msg": "注册成功" }
+// @Success 200 { string } "{"account": "3169387148", "code": 200, "msg": "注册成功"}"
 // @Router /user/register  [post]
 func Register(c *gin.Context) {
 	fmt.Println(c.FullPath())

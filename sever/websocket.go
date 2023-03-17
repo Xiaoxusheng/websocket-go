@@ -22,7 +22,7 @@ var client = make(map[string]*websocket.Conn)
 // @Summary  websocket连接接口
 // @Param token header string true "token"
 // @Schemes
-// @Description  token 邮箱为必填
+// @Description  token 为必填
 // @Tags 公共方法
 // @Accept json
 // @Produce json
@@ -65,10 +65,11 @@ func Websecket(c *gin.Context) {
 		models.InsertMessage(&models.Message{
 			use.Indently, utility.GetMessageId(), message.Message, message.Room_idently, time.Now().Unix(),
 		})
+
 		//获取在线人数
 		ws := models.GetUserbyIdentlyRoomId(message.Room_idently)
 		//发送数据
-		fmt.Println(client)
+		fmt.Println(ws)
 		for _, w := range ws {
 			if cc, ok := client[w.Useridently]; ok {
 				if err := cc.WriteMessage(websocket.TextMessage, []byte(message.Message)); err != nil {

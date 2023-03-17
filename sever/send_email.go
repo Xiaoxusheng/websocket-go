@@ -20,7 +20,7 @@ import (
 // @Tags 公共方法
 // @Accept json
 // @Produce json
-// @Success 200 {string} { "code": "530757", "msg": "获取验证码成功！" }
+// @Success 200 {string}  "{ "code": "530757", "msg": "获取验证码成功！" }"
 // @Router  /user/send_code [get]
 func Send_email(c *gin.Context) {
 	username := c.Query("username")

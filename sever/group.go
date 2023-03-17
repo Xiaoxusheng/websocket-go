@@ -20,7 +20,7 @@ import (
 // @Tags 公共方法
 // @Accept multipart/form-data
 // @Produce json
-// @Success 200 {string} { "code": 200,"msg": "创建群聊成功,群号为:8660920"}
+// @Success 200 {string}  "{"code": 200,"msg": "创建群聊成功,群号为:8660920"}"
 // @Router  /group/group  [post]
 func CreateGroup(c *gin.Context) {
 	info := c.PostForm("info")
@@ -34,7 +34,6 @@ func CreateGroup(c *gin.Context) {
 		})
 		return
 	}
-	fmt.Println("info", info)
 	if info == "" {
 		c.JSON(http.StatusOK, gin.H{
 			"code": 1,
@@ -76,15 +75,15 @@ func CreateGroup(c *gin.Context) {
 // JoinGroup
 // 加入群聊
 // @Summary 加入群聊接口
-// @Param room_id formData string true "群号"
+// @Param room_id query string true "群号"
 // @Param token header string true "token"
 // @Schemes
 // @Description room_id token 为必填
 // @Tags 公共方法
 // @Accept multipart/form-data
 // @Produce json
-// @Success 200 {string} {"code": 200, "msg": "加入群聊成功！"}
-// @Router  /group/join  [post]
+// @Success 200 {string}  "{"code": 200, "msg": "加入群聊成功！"}"
+// @Router  /group/join  [get]
 func JoinGroup(c *gin.Context) {
 	room_id := c.Query("room_id")
 	token := c.GetHeader("token")
@@ -140,14 +139,14 @@ func JoinGroup(c *gin.Context) {
 // PingExample godoc
 // 退出群聊
 // @Summary 退出群聊接口
-// @Param room_id header string true "群号"
+// @Param room_id query string true "群号"
 // @Param token header string true "token"
 // @Schemes
 // @Description room_id token 为必填
 // @Tags 公共方法
 // @Accept multipart/form-data
 // @Produce json
-// @Success 200 {string} {"code":200,"msg":"退出成功！"}
+// @Success 200 {string}  "{"code":200,"msg":"退出成功！"}"
 // @Router  /group/exit  [get]
 func ExitGroup(c *gin.Context) {
 	room_id := c.Query("room_id")
@@ -160,6 +159,7 @@ func ExitGroup(c *gin.Context) {
 		})
 		return
 	}
+	fmt.Println(room_id)
 	if room_id == "" {
 		c.JSON(http.StatusOK, gin.H{
 			"code": 1,
@@ -184,6 +184,19 @@ func ExitGroup(c *gin.Context) {
 		})
 		return
 	}
+	room := models.GetGroupLord(use.Indently)
+	if len(room) != 0 {
+		err := models.DissolveGroup(room_id)
+		if err != nil {
+			return
+		}
+		models.DelGroup(room_id)
+		c.JSON(http.StatusOK, gin.H{
+			"code": 200,
+			"msg":  "解散群聊成功！",
+		})
+		return
+	}
 	c.JSON(http.StatusOK, gin.H{
 		"code": 200,
 		"msg":  "退出成功！",
@@ -200,7 +213,9 @@ func ExitGroup(c *gin.Context) {
 // @Tags 公共方法
 // @Accept multipart/form-data
 // @Produce json
-// @Success 200 {string} {"code":200,"msg":"退出成功！"}
+//
+//	@Success 200 {string}  "{"code": 200,"data": {	"data": [	{	"Indently": "6a2a462c-a107-48ea-82e5-74e308327e6f",	"Username": "admin", "Password": "21232f297a57a5a743894a0e4a801fc3",	"Use_status": 0,	"Register_time": "2023-03-13 17:05:08",	"Email": "3096407764@qq.com",	"account": "3169387148"	},	{		"Indently": "cacda2d3-4a77-4afa-94b5-6ff2c036d126", "Username": "leilong",		   "Password": "e10adc3949ba59abbe56e057f20f883e", "Use_status": 0, "Register_time": "2023-03-12 19:07:16","Email": "3096407768@qq.com", "account": "9546270155"}]	}, "msg": "获取数据成功！"}"
+//
 // @Router  /group/grouplist  [get]
 func GetGroupList(c *gin.Context) {
 	room_id := c.Query("room_id")

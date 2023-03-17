@@ -33,7 +33,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "群号",
                         "name": "room_id",
-                        "in": "header",
+                        "in": "query",
                         "required": true
                     },
                     {
@@ -46,7 +46,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "code\":200,\"msg\":\"退出成功！\"}",
+                        "description": "{\"code\":200,\"msg\":\"退出成功！\"}",
                         "schema": {
                             "type": "string"
                         }
@@ -85,7 +85,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "code\": 200,\"msg\": \"创建群聊成功,群号为:8660920\"}",
+                        "description": "{\"code\": 200,\"msg\": \"创建群聊成功,群号为:8660920\"}",
                         "schema": {
                             "type": "string"
                         }
@@ -117,7 +117,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "code\":200,\"msg\":\"退出成功！\"}",
+                        "description": "{\"code\": 200,\"data\": {\t\"data\": [\t{\t\"Indently\": \"6a2a462c-a107-48ea-82e5-74e308327e6f\",\t\"Username\": \"admin\", \"Password\": \"21232f297a57a5a743894a0e4a801fc3\",\t\"Use_status\": 0,\t\"Register_time\": \"2023-03-13 17:05:08\",\t\"Email\": \"3096407764@qq.com\",\t\"account\": \"3169387148\"\t},\t{\t\t\"Indently\": \"cacda2d3-4a77-4afa-94b5-6ff2c036d126\", \"Username\": \"leilong\",\t\t   \"Password\": \"e10adc3949ba59abbe56e057f20f883e\", \"Use_status\": 0, \"Register_time\": \"2023-03-12 19:07:16\",\"Email\": \"3096407768@qq.com\", \"account\": \"9546270155\"}]\t}, \"msg\": \"获取数据成功！\"}",
                         "schema": {
                             "type": "string"
                         }
@@ -126,7 +126,7 @@ const docTemplate = `{
             }
         },
         "/group/join": {
-            "post": {
+            "get": {
                 "description": "room_id token 为必填",
                 "consumes": [
                     "multipart/form-data"
@@ -143,7 +143,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "群号",
                         "name": "room_id",
-                        "in": "formData",
+                        "in": "query",
                         "required": true
                     },
                     {
@@ -156,7 +156,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "code\": 200, \"msg\": \"加入群聊成功！\"}",
+                        "description": "{\"code\": 200, \"msg\": \"加入群聊成功！\"}",
                         "schema": {
                             "type": "string"
                         }
@@ -166,7 +166,7 @@ const docTemplate = `{
         },
         "/user/delete": {
             "get": {
-                "description": "用户名 token 邮箱为必填",
+                "description": "token 账号为必填",
                 "consumes": [
                     "application/json"
                 ],
@@ -195,7 +195,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "code\":200,\"msg\":\"删除成功！\"}",
+                        "description": "{\"code\":200,\"msg\":\"删除成功！\"}",
                         "schema": {
                             "type": "string"
                         }
@@ -225,7 +225,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "code\":1,\"msg\":\"\\u0001个文件上传成功\",\"url\":\"127.0.0.1:8080/img/12.png\"}",
+                        "description": "{\"code\":1,\"msg\":\"\\u0001个文件上传成功\",\"url\":\"127.0.0.1:8080/img/12.png\"}",
                         "schema": {
                             "type": "string"
                         }
@@ -233,7 +233,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/user/friendlist": {
+        "/user/friend_list": {
             "get": {
                 "description": "token 为必填",
                 "consumes": [
@@ -257,7 +257,39 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "code\":200,\"msg\":\"删除成功！\"}",
+                        "description": "{ \"code\": 200, \"data\": {\"data\": [    {\"Indently\": \"6a2a462c-a107-48ea-82e5-74e308327e6f\", \"Username\": \"admin\", \"Password\": \"21232f297a57a5a743894a0e4a801fc3\", \"Use_status\": 0, \"Register_time\": \"2023-03-13 17:05:08\",\"Email\": \"3096407764@qq.com\", \"account\": \"3169387148\"}]}, \"msg\": \"获取数据成功！\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/get_message": {
+            "get": {
+                "description": "room_id 为必填",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "公共方法"
+                ],
+                "summary": "获取聊天记录接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "房间号",
+                        "name": "room_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":1,\"data\":{\"data\":[{\"id\":29,\"idently\":\"6a2a462c-a107-48ea-82e5-74e308327e6f\",\"message_id\":6858759,\"message\":\"你好，我是张三\",\"room_idently\":\"0820018\",\"messagesend_time\":1679052325},{\"id\":30,\"idently\":\"cacda2d3-4a77-4afa-94b5-6ff2c036d126\",\"message_id\":72843315,\"message\":\"你好，我是李四\",\"room_idently\":\"0820018\",\"messagesend_time\":1679052347},{\"id\":31,\"idently\":\"cacda2d3-4a77-4afa-94b5-6ff2c036d126\",\"message_id\":91900639,\"message\":\"你好，我是李四\",\"room_idently\":\"0820018\",\"messagesend_time\":1679054157},{\"id\":32,\"idently\":\"cacda2d3-4a77-4afa-94b5-6ff2c036d126\",\"message_id\":63367923,\"message\":\"你好，我是李四\",\"room_idently\":\"0820018\",\"messagesend_time\":1679054157},{\"id\":33,\"idently\":\"cacda2d3-4a77-4afa-94b5-6ff2c036d126\",\"message_id\":30613339,\"message\":\"你好，我是李四\",\"room_idently\":\"0820018\",\"messagesend_time\":1679054158}]},\"msg\":\"获取数据成功！\"}",
                         "schema": {
                             "type": "string"
                         }
@@ -267,7 +299,7 @@ const docTemplate = `{
         },
         "/user/join": {
             "get": {
-                "description": "用户名 token 邮箱为必填",
+                "description": "账号 token 为必填",
                 "consumes": [
                     "application/json"
                 ],
@@ -296,7 +328,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "code\":200,\"msg\":\"添加好友成功！\"}",
+                        "description": "{\"code\":200,\"msg\":\"添加好友成功！\"}",
                         "schema": {
                             "type": "string"
                         }
@@ -306,7 +338,7 @@ const docTemplate = `{
         },
         "/user/login": {
             "post": {
-                "description": "用户名 密码为必填",
+                "description": "用户名 密码 验证码为必填",
                 "consumes": [
                     "multipart/form-data"
                 ],
@@ -342,7 +374,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "code\": 200, \"msg\": \"登陆成功\", \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbmRlbnRseSI6IjZhMmE0NjJjLWExMDctNDhlYS04MmU1LTc0ZTMwODMyN2U2ZiIsInVzZXJuYW1lIjoiYWRtaW4iLCJpc3MiOiJ0ZXN0IiwiZXhwIjoxNjc4Nzg2NTM1fQ.P4dJ_f2UGhKbpiIqHxTxghRKwKIlCpF2XjryHCSnKKk\" }",
+                        "description": "{\"code\": 200, \"msg\": \"登陆成功\", \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbmRlbnRseSI6IjZhMmE0NjJjLWExMDctNDhlYS04MmU1LTc0ZTMwODMyN2U2ZiIsInVzZXJuYW1lIjoiYWRtaW4iLCJpc3MiOiJ0ZXN0IiwiZXhwIjoxNjc4Nzg2NTM1fQ.P4dJ_f2UGhKbpiIqHxTxghRKwKIlCpF2XjryHCSnKKk\"}",
                         "schema": {
                             "type": "string"
                         }
@@ -388,9 +420,9 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "account\": \"3169387148\", \"code\": 200, \"msg\": \"注册成功\" }",
+                        "description": "{\"account\": \"3169387148\", \"code\": 200, \"msg\": \"注册成功\"}",
                         "schema": {
-                            "type": "string"
+                            "type": ""
                         }
                     }
                 }
@@ -420,7 +452,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "code\": \"530757\", \"msg\": \"获取验证码成功！\" }",
+                        "description": "{ \"code\": \"530757\", \"msg\": \"获取验证码成功！\" }",
                         "schema": {
                             "type": "string"
                         }
@@ -430,7 +462,7 @@ const docTemplate = `{
         },
         "/user/websocket": {
             "get": {
-                "description": "token 邮箱为必填",
+                "description": "token 为必填",
                 "consumes": [
                     "application/json"
                 ],
