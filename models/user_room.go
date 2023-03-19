@@ -150,3 +150,13 @@ func DissolveGroup(room_id string) error {
 	return nil
 
 }
+
+func GetUserByUserindently(useridently string) *[]Userroom {
+	room := []Userroom{}
+	err := db.DB.Select(&room, "select * from user_room where useridently=?", useridently)
+	if err != nil {
+		log.Println(err)
+		return nil
+	}
+	return &room
+}

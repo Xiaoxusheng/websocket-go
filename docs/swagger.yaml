@@ -183,11 +183,16 @@ paths:
     get:
       consumes:
         - multipart/form-data
-      description: room_id 为必填
+      description: room_id token 为必填
       parameters:
         - description: 房间号
           in: query
           name: room_id
+          required: true
+          type: string
+        - description: token
+          in: header
+          name: token
           required: true
           type: string
       produces:
@@ -307,6 +312,28 @@ paths:
           schema:
             type: string
       summary: 验证码接口
+      tags:
+        - 公共方法
+  /user/userinfo:
+    get:
+      consumes:
+        - multipart/form-data
+      description: token 为必填
+      parameters:
+        - description: token
+          in: header
+          name: token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{"data":{"Indently":"949c770f-0b1e-4ca0-a15a-927ee5396c3b","Username":"aadmin","Password":"21232f297a57a5a743894a0e4a801fc3","Use_status":0,"Register_time":"2023-03-12
+            19:07:30","Email":"3096407769@qq.com","account":"8356511203"}},"msg":"获取数据成功！"}'
+          schema:
+            type: string
+      summary: 获取用户信息接口
       tags:
         - 公共方法
   /user/websocket:

@@ -12,12 +12,16 @@ import (
 // 控制层
 func Router() *gin.Engine {
 	r := gin.Default()
+	//html模板
+	r.LoadHTMLGlob("view/*")
+
 	// 公共方法
 	User := r.Group("/user", use.IPLimite())
 	docs.SwaggerInfo.BasePath = ""
 	r.MaxMultipartMemory = 32
 	{
 		User.POST("/login", use.VerifyEmail(), server.Login)
+		User.GET("/userinfo", server.Userinfo)
 		User.POST("/register", server.Register)
 		User.GET("/send_code", server.Send_email)
 		User.POST("/img", server.File)
@@ -26,6 +30,7 @@ func Router() *gin.Engine {
 		User.GET("/delete", server.DelPrivate)
 		User.GET("friend_list", server.Friendlist)
 		User.GET("/get_message", server.ChatRecord)
+		User.GET("/html", server.Html)
 	}
 	// 群聊
 	Group := r.Group("/group")

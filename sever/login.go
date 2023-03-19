@@ -160,3 +160,43 @@ func Register(c *gin.Context) {
 		}
 	}
 }
+
+// Userinfo
+// PingExample godoc
+// 聊天记录
+// @Summary 获取用户信息接口
+// @Param token header string true "token"
+// @Schemes
+// @Description token 为必填
+// @Tags 公共方法
+// @Accept multipart/form-data
+// @Produce json
+// @Success 200 {string}   "{"code":200,"data":{"data":{"Indently":"949c770f-0b1e-4ca0-a15a-927ee5396c3b","Username":"aadmin","Password":"21232f297a57a5a743894a0e4a801fc3","Use_status":0,"Register_time":"2023-03-12 19:07:30","Email":"3096407769@qq.com","account":"8356511203"}},"msg":"获取数据成功！"}"
+// @Router   /user/userinfo   [get]
+func Userinfo(c *gin.Context) {
+	token := c.GetHeader("token")
+	use, err := utility.ParseWithClaims(token)
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"code": 1,
+			"msg":  "系统错误，" + err.Error(),
+		})
+		return
+	}
+	username, err := models.GetUsername(use.Indently)
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"code": 1,
+			"msg":  "系统错误或用户不存在，" + err.Error(),
+		})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"msg":  "获取数据成功！",
+		"data": gin.H{
+			"data": username,
+		},
+	})
+
+}

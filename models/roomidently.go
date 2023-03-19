@@ -19,16 +19,6 @@ func (r Room_id) GetRoomidently() string {
 	return "Room_id"
 }
 
-func GetUserByUserindently(useridently string) *[]Room_id {
-	room := []Room_id{}
-	err := db.DB.Select(&room, "select * from room_id where useridently=?", useridently)
-	if err != nil {
-		log.Println(err)
-		return nil
-	}
-	return &room
-}
-
 // 创建群聊
 func CreateRoom(id *Room_id) bool {
 	_, err := db.DB.Exec("insert into room_id(roomidently,useridently,room_type,creaet_time,create_uesr,info) value (?,?,?,?,?,?)", id.Roomidently, id.Useridently, id.Room_type, id.Creaet_time, id.Create_uesr, id.Info)

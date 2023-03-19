@@ -1,7 +1,6 @@
 package test
 
 import (
-<<<<<<< HEAD
 	"Gin/db"
 	"context"
 	"fmt"
@@ -9,10 +8,6 @@ import (
 	"math/rand"
 	"os"
 	"strconv"
-=======
-	"fmt"
-	"github.com/golang-jwt/jwt/v5"
->>>>>>> origin/master
 	"testing"
 	"time"
 )
@@ -33,11 +28,9 @@ func Test_createtoken(*testing.T) {
 }
 
 func Test_parseToken(*testing.T) {
-<<<<<<< HEAD
+
 	tokenString := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjEyMyIsInBhc3N3b3JkIjoiNDQ4IiwiaXNzIjoidGVzdCIsImV4cCI6MTY3ODQ1NzY2MX0.rEpVxcaOcqOwLh8wKPvuzTHAGdIBTv1OaACezqlcpCo"
-=======
-	tokenString := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjEyMyIsInBhc3N3b3JkIjoiNDQ4IiwiaXNzIjoidGVzdCIsImV4cCI6MTY3ODA5ODQ0OH0.n5llexjpe1rzHoph0XeN4BZIQraLUo88BAEQTq2ox1s"
->>>>>>> origin/master
+
 	token, err := jwt.ParseWithClaims(tokenString, &user{}, func(token *jwt.Token) (interface{}, error) {
 		return []byte("suhusduhhs65+978t$67"), nil
 	})
@@ -50,9 +43,8 @@ func Test_parseToken(*testing.T) {
 		fmt.Println(err)
 	}
 }
-<<<<<<< HEAD
 
-func Test_1(*testing.T) {
+func Test_1(t *testing.T) {
 	err := os.Setenv("key", ("suhusduhhs65+978t$67"))
 	if err != nil {
 		return
@@ -169,5 +161,3 @@ func Test_hehe(*testing.T) {
 	DB.FlushDB(ctx).Result()
 
 }*/
-=======
->>>>>>> origin/master

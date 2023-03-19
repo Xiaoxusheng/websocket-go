@@ -49,9 +49,9 @@ func AuthontokenParse() gin.HandlerFunc {
 		} else {
 			c.JSON(http.StatusOK, gin.H{
 				"code": 1,
-				"msg":  "验证失败!",
+				"msg":  "验证失败，无权限!",
 			})
-			c.Abort()
+			return
 		}
 
 	}

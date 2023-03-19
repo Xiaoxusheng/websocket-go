@@ -267,7 +267,7 @@ const docTemplate = `{
         },
         "/user/get_message": {
             "get": {
-                "description": "room_id 为必填",
+                "description": "room_id token 为必填",
                 "consumes": [
                     "multipart/form-data"
                 ],
@@ -284,6 +284,13 @@ const docTemplate = `{
                         "description": "房间号",
                         "name": "room_id",
                         "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "token",
+                        "name": "token",
+                        "in": "header",
                         "required": true
                     }
                 ],
@@ -453,6 +460,38 @@ const docTemplate = `{
                 "responses": {
                     "200": {
                         "description": "{ \"code\": \"530757\", \"msg\": \"获取验证码成功！\" }",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/userinfo": {
+            "get": {
+                "description": "token 为必填",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "公共方法"
+                ],
+                "summary": "获取用户信息接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":200,\"data\":{\"data\":{\"Indently\":\"949c770f-0b1e-4ca0-a15a-927ee5396c3b\",\"Username\":\"aadmin\",\"Password\":\"21232f297a57a5a743894a0e4a801fc3\",\"Use_status\":0,\"Register_time\":\"2023-03-12 19:07:30\",\"Email\":\"3096407769@qq.com\",\"account\":\"8356511203\"}},\"msg\":\"获取数据成功！\"}",
                         "schema": {
                             "type": "string"
                         }

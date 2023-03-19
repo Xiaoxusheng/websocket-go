@@ -22,3 +22,9 @@ type Message struct {
    "message":"你好，我是张三",
    "room_type":"group"
 }*/
+
+/*{
+   "room_idently":"3725963",
+   "message":"你好，我是leilong",
+   "room_type":"group"
+}*/

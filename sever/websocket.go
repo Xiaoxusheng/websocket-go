@@ -44,7 +44,6 @@ func Websecket(c *gin.Context) {
 		log.Println(err)
 		return
 	}
-
 	//client[i]
 	client[use.Indently] = ws
 	fmt.Println(client)
@@ -52,14 +51,12 @@ func Websecket(c *gin.Context) {
 	//fmt.Println(client)
 	defer ws.Close()
 	for {
-
 		//获得数据
 		err := ws.ReadJSON(message)
 		if err != nil {
 			log.Println(err)
 			return
 		}
-		fmt.Println(message.Room_idently)
 		//log.Printf("recv: %v   p:%v", messageType, string(p))
 		//聊天记录记录
 		models.InsertMessage(&models.Message{
@@ -69,7 +66,7 @@ func Websecket(c *gin.Context) {
 		//获取在线人数
 		ws := models.GetUserbyIdentlyRoomId(message.Room_idently)
 		//发送数据
-		fmt.Println(ws)
+		//fmt.Println(ws)
 		for _, w := range ws {
 			if cc, ok := client[w.Useridently]; ok {
 				if err := cc.WriteMessage(websocket.TextMessage, []byte(message.Message)); err != nil {
