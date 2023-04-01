@@ -8,6 +8,13 @@ type Message struct {
 	Room_type        string `json:"room_type"`
 	Messagesend_time int64  `json:"messagesend_time"`
 	Message          string `json:"message"`
+	Useridently      string `json:"useridently"`
+}
+
+type Userinfo struct {
+	Room_id   string      `json:"room_id"`
+	Userinfo  interface{} `json:"userinfo"`
+	Room_type string      `json:"room_type"`
 }
 
 /*{
@@ -23,8 +30,8 @@ type Message struct {
    "room_type":"group"
 }*/
 
-/*{
-   "room_idently":"3725963",
-   "message":"你好，我是leilong",
-   "room_type":"group"
-}*/
+//{
+//"room_idently":"3725963",
+//"message":"你好，我是leilong",
+//"room_type":"group"
+//}

@@ -1,4 +1,4 @@
-package use
+package middleware
 
 import (
 	"Gin/db"

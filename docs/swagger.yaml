@@ -262,6 +262,27 @@ paths:
       summary: 登录接口
       tags:
         - 公共方法
+  /user/online:
+    get:
+      consumes:
+        - application/json
+      description: account 为必填
+      parameters:
+        - description: account
+          in: query
+          name: token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: '{ "code": 200, "msg": "获取用户状态成功！", "status": true }'
+          schema:
+            type: string
+      summary: 获取好友在线状态接口
+      tags:
+        - 公共方法
   /user/register:
     post:
       consumes:

@@ -2,6 +2,7 @@ package models
 
 import (
 	"Gin/db"
+	"encoding/json"
 	"log"
 	"strconv"
 )
@@ -24,6 +25,14 @@ type Messages struct {
 	Messagesend_time int64  `json:"messagesend_time"`
 }
 
+func (m *Message) MarshalBinary() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+func (m *Message) UnmarshalBinary(data []byte) error {
+	return json.Unmarshal(data, m)
+}
+
 func (m *Message) GetMessage() string {
 	return "message"
 }
@@ -42,7 +51,7 @@ func GetMessages(id string, pageSize string, pageNumber int) (*[]Messages, error
 	if err != nil {
 		return nil, err
 	}
-	err = db.DB.Select(&messages, "select * from message  where  room_idently=? limit ?,? ", id, pageSizes-1, pageNumber)
+	err = db.DB.Select(&messages, "select * from message  where  room_idently=? limit ?,? order by time ", id, pageSizes-1, pageNumber)
 	if err != nil {
 		log.Println("SELECT ERR:", err)
 		return nil, err

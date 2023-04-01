@@ -24,7 +24,7 @@ import (
 // @Router  /user/send_code [get]
 func Send_email(c *gin.Context) {
 	username := c.Query("username")
-	fmt.Println(username)
+	//fmt.Println(username)
 	code := utility.Getcode()
 	ctx := context.Background()
 	//键值是否存在
@@ -45,19 +45,20 @@ func Send_email(c *gin.Context) {
 	//验证码不存在
 	if res == 0 {
 		reslust, err := db.Rdb.HSet(ctx, username, "randString", code, "time", time.Now().Unix(), "username", username).Result()
-		fmt.Println(reslust)
+		fmt.Println("result", reslust)
 		//1分钟后过期
 		db.Rdb.Expire(ctx, username, time.Second*60)
-		fmt.Println(db.Rdb.TTL(ctx, username).Result())
+		//fmt.Println(db.Rdb.TTL(ctx, username).Result())
 		if err != nil {
 			log.Println("插入数据出错：" + err.Error())
 			return
 		}
 		c.JSON(http.StatusOK, gin.H{
-			"code": code,
-			"msg":  "获取验证码成功！",
+			"code":       200,
+			"msg":        "获取验证码成功！",
+			"email_code": code,
 		})
-		utility.Sendemails()
+		utility.Sendemails(code)
 	} else {
 		result, err := db.Rdb.HMGet(ctx, username, "username", "time", "randString").Result()
 		fmt.Println(db.Rdb.TTL(ctx, username).Result())

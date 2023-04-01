@@ -35,14 +35,13 @@ func InsertUseridently(user_room *User_room) error {
 
 // GetUserbyIdentlyRoomId 查
 func GetUserbyIdentlyRoomId(roomidently string) []Userroom {
-	fmt.Println(roomidently)
 	user_room := []Userroom{}
 	err := db.DB.Select(&user_room, "select * from user_room where  roomidently=?", roomidently)
 	if err != nil {
 		log.Println(err)
 		return nil
 	}
-	fmt.Println(user_room)
+	//fmt.Println(user_room)
 	return user_room
 }
 

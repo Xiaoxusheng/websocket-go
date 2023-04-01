@@ -41,7 +41,7 @@ func File(c *gin.Context) {
 		fmt.Println("文件名称：", file.Filename)
 		for _, k := range fileslice {
 			if k == file.Filename {
-				c.JSON(http.StatusForbidden, gin.H{
+				c.JSON(http.StatusOK, gin.H{
 					"msg":  "文件已经存在，请不要重复上传！",
 					"code": 0,
 				})

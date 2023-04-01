@@ -16,7 +16,7 @@ func init() {
 	client := redis.NewClient(&redis.Options{
 		Addr:     "39.98.40.255:6379",
 		Password: "admin123", // no password set
-		DB:       0,          // use default DB
+		DB:       0,          // uses default DB
 		PoolSize: 1000,
 	})
 	ctx := context.Background()

@@ -199,13 +199,17 @@ func Friendlist(c *gin.Context) {
 		return
 	}
 	frieendlist := models.GetFriendList(use.Indently)
-	user := make([]*models.User, 0)
+	user := make([]*utility.Userinfo, 0)
 	for _, userroom := range frieendlist {
-		username, err := models.GetUsername(userroom.Friendidently)
+		userinfos, err := models.GetUsername(userroom.Friendidently)
 		if err != nil {
 			return
 		}
-		user = append(user, username)
+		user = append(user, &utility.Userinfo{
+			userroom.Roomidently,
+			userinfos,
+			userroom.Room_type,
+		})
 	}
 
 	c.JSON(http.StatusOK, gin.H{
@@ -214,5 +218,50 @@ func Friendlist(c *gin.Context) {
 		"data": gin.H{
 			"data": user,
 		},
+	})
+}
+
+// 好友在线状态
+// PingExample godoc
+// @Summary  获取好友在线状态接口
+// @Param token query string true "account"
+// @Schemes
+// @Description  account 为必填
+// @Tags 公共方法
+// @Accept json
+// @Produce json
+// @Success 200 {string}  "{ "code": 200, "msg": "获取用户状态成功！", "status": true }"
+// @Router  /user/online      [get]
+func GetUserOnline(c *gin.Context) {
+	account := c.Query("account")
+	if account == "" {
+		c.JSON(http.StatusOK, gin.H{
+			"code": 1,
+			"msg":  "参数错误！",
+		})
+		return
+	}
+	byaccount, err := models.GetUserByaccount(account)
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"code": 1,
+			"msg":  "系统错误！" + err.Error(),
+		})
+		return
+	}
+	for i, _ := range Client {
+		if i == byaccount.Indently {
+			c.JSON(http.StatusOK, gin.H{
+				"code":   200,
+				"msg":    "获取用户状态成功！",
+				"status": true,
+			})
+		}
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code":   1,
+		"msg":    "获取用户状态成功！",
+		"status": false,
 	})
 }
