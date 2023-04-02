@@ -19,7 +19,7 @@ import (
 // @Accept json
 // @Produce json
 // @Success 200 {string}  "{"code":1,"msg":"\u0001个文件上传成功","url":"127.0.0.1:8080/img/12.png"}
-// @Router  /user/delete      [post]
+// @Router  /user/file      [post]
 func File(c *gin.Context) {
 	var filename string
 	fileslice := make([]string, 10)

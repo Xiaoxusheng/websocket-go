@@ -224,7 +224,7 @@ func Friendlist(c *gin.Context) {
 // 好友在线状态
 // PingExample godoc
 // @Summary  获取好友在线状态接口
-// @Param token query string true "account"
+// @Param account query string true "account"
 // @Schemes
 // @Description  account 为必填
 // @Tags 公共方法
@@ -233,6 +233,7 @@ func Friendlist(c *gin.Context) {
 // @Success 200 {string}  "{ "code": 200, "msg": "获取用户状态成功！", "status": true }"
 // @Router  /user/online      [get]
 func GetUserOnline(c *gin.Context) {
+	online := false
 	account := c.Query("account")
 	if account == "" {
 		c.JSON(http.StatusOK, gin.H{
@@ -251,17 +252,22 @@ func GetUserOnline(c *gin.Context) {
 	}
 	for i, _ := range Client {
 		if i == byaccount.Indently {
+			online = true
 			c.JSON(http.StatusOK, gin.H{
 				"code":   200,
 				"msg":    "获取用户状态成功！",
 				"status": true,
 			})
+			break
 		}
+	}
+	if !online {
+		c.JSON(http.StatusOK, gin.H{
+			"code":   1,
+			"msg":    "获取用户状态成功！",
+			"status": false,
+		})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{
-		"code":   1,
-		"msg":    "获取用户状态成功！",
-		"status": false,
-	})
+
 }

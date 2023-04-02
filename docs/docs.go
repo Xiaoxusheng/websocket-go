@@ -201,7 +201,9 @@ const docTemplate = `{
                         }
                     }
                 }
-            },
+            }
+        },
+        "/user/file": {
             "post": {
                 "description": "上传文件\nfile 为必填",
                 "consumes": [
@@ -406,7 +408,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "account",
-                        "name": "token",
+                        "name": "account",
                         "in": "query",
                         "required": true
                     }

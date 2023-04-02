@@ -133,6 +133,7 @@ paths:
       summary: 删除好友接口
       tags:
         - 公共方法
+  /user/file:
     post:
       consumes:
         - application/json
@@ -270,7 +271,7 @@ paths:
       parameters:
         - description: account
           in: query
-          name: token
+          name: account
           required: true
           type: string
       produces:

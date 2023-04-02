@@ -31,7 +31,7 @@ func ChatRecord(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code": 1,
-			"msg":  "系统错误，" + err.Error(),
+			"msg":  "2系统错误，" + err.Error(),
 		})
 		return
 	}
@@ -61,7 +61,7 @@ func ChatRecord(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code": 1,
-			"msg":  "系统错误，" + err.Error(),
+			"msg":  "1系统错误，" + err.Error(),
 		})
 		return
 	}

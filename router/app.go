@@ -25,22 +25,22 @@ func Router() *gin.Engine {
 	r.LoadHTMLGlob("view/*")
 
 	// 公共方法
-	User := r.Group("/user", middleware.IPLimite())
+	User := r.Group("/user")
 	docs.SwaggerInfo.BasePath = ""
 	r.MaxMultipartMemory = 32
 	{
 		User.POST("/login", middleware.VerifyEmail(), server.Login)
-		User.GET("/userinfo", server.Userinfo)
+		User.GET("/userinfo", middleware.TokenParse(), server.Userinfo)
 		User.POST("/register", server.Register)
 		User.GET("/send_code", server.Send_email)
-		User.POST("/img", server.File)
+		User.POST("/file", middleware.TokenParse(), server.File)
 		User.GET("/websocket", server.Websecket)
-		User.GET("/join", server.JoinPrivate)
-		User.GET("/delete", server.DelPrivate)
-		User.GET("friend_list", server.Friendlist)
-		User.GET("/get_message", server.ChatRecord)
+		User.GET("/join", middleware.TokenParse(), server.JoinPrivate)
+		User.GET("/delete", middleware.TokenParse(), server.DelPrivate)
+		User.GET("friend_list", middleware.TokenParse(), server.Friendlist)
+		User.GET("/get_message", middleware.TokenParse(), server.ChatRecord)
 		User.GET("/html", server.Html)
-		User.GET("/online", server.GetUserOnline)
+		User.GET("/online", middleware.TokenParse(), server.GetUserOnline)
 	}
 	// 群聊
 	Group := r.Group("/group")
