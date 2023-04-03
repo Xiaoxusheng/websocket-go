@@ -24,15 +24,8 @@ import (
 func JoinPrivate(c *gin.Context) {
 	//好友的account
 	account := c.Query("account")
-	token := c.GetHeader("token")
-	use, err := utility.ParseWithClaims(token)
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": 1,
-			"msg":  err.Error(),
-		})
-		return
-	}
+	user := c.MustGet("use")
+	use := user.(*utility.User)
 	if account == "" {
 		c.JSON(http.StatusOK, gin.H{
 			"code": 1,
@@ -62,7 +55,7 @@ func JoinPrivate(c *gin.Context) {
 	}
 	//房间号
 	id := utility.GetRoomId()
-	err = models.InsertUseridently(&models.User_room{use.Indently, id, time.Now().Unix(), time.Now().Unix(), "private", u.Indently})
+	err := models.InsertUseridently(&models.User_room{use.Indently, id, time.Now().Unix(), time.Now().Unix(), "private", u.Indently})
 	if err != nil {
 		log.Println("1", err)
 		c.JSON(http.StatusOK, gin.H{
@@ -106,15 +99,8 @@ func JoinPrivate(c *gin.Context) {
 // @Router  /user/delete      [get]
 func DelPrivate(c *gin.Context) {
 	account := c.Query("account")
-	token := c.GetHeader("token")
-	use, err := utility.ParseWithClaims(token)
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": 1,
-			"msg":  err.Error(),
-		})
-		return
-	}
+	user := c.MustGet("use")
+	use := user.(*utility.User)
 	if account == "" {
 		c.JSON(http.StatusOK, gin.H{
 			"code": 1,
@@ -143,7 +129,7 @@ func DelPrivate(c *gin.Context) {
 		return
 	}
 	//删除
-	err = models.Del(use.Indently, mc.Indently)
+	err := models.Del(use.Indently, mc.Indently)
 	if err != nil {
 		log.Println(err)
 		c.JSON(http.StatusOK, gin.H{
@@ -189,15 +175,8 @@ func DelPrivate(c *gin.Context) {
 // @Success 200 {string}  "{ "code": 200, "data": {"data": [    {"Indently": "6a2a462c-a107-48ea-82e5-74e308327e6f", "Username": "admin", "Password": "21232f297a57a5a743894a0e4a801fc3", "Use_status": 0, "Register_time": "2023-03-13 17:05:08","Email": "3096407764@qq.com", "account": "3169387148"}]}, "msg": "获取数据成功！"}"
 // @Router  /user/friend_list      [get]
 func Friendlist(c *gin.Context) {
-	token := c.GetHeader("token")
-	use, err := utility.ParseWithClaims(token)
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": 1,
-			"msg":  "系统错误！" + err.Error(),
-		})
-		return
-	}
+	userinfo := c.MustGet("use")
+	use := userinfo.(*utility.User)
 	frieendlist := models.GetFriendList(use.Indently)
 	user := make([]*utility.Userinfo, 0)
 	for _, userroom := range frieendlist {

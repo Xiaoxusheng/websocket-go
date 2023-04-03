@@ -25,15 +25,8 @@ import (
 func CreateGroup(c *gin.Context) {
 	info := c.PostForm("info")
 	//获取token里面的idently
-	token := c.GetHeader("token")
-	use, err := utility.ParseWithClaims(token)
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": 1,
-			"msg":  err.Error(),
-		})
-		return
-	}
+	user := c.MustGet("use")
+	use := user.(*utility.User)
 	if info == "" {
 		c.JSON(http.StatusOK, gin.H{
 			"code": 1,
@@ -86,15 +79,8 @@ func CreateGroup(c *gin.Context) {
 // @Router  /group/join  [get]
 func JoinGroup(c *gin.Context) {
 	room_id := c.Query("room_id")
-	token := c.GetHeader("token")
-	use, err := utility.ParseWithClaims(token)
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": 1,
-			"msg":  "系统错误，" + err.Error(),
-		})
-		return
-	}
+	user := c.MustGet("use")
+	use := user.(*utility.User)
 	fmt.Println(room_id)
 	if room_id == "" {
 		c.JSON(http.StatusOK, gin.H{
@@ -104,7 +90,7 @@ func JoinGroup(c *gin.Context) {
 		return
 	}
 	value := models.GetRoomId(room_id)
-	err = models.GetGroup(use.Indently, room_id)
+	err := models.GetGroup(use.Indently, room_id)
 	if err == nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code": 1,
@@ -150,15 +136,8 @@ func JoinGroup(c *gin.Context) {
 // @Router  /group/exit  [get]
 func ExitGroup(c *gin.Context) {
 	room_id := c.Query("room_id")
-	token := c.GetHeader("token")
-	use, err := utility.ParseWithClaims(token)
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": 1,
-			"msg":  "系统错误，" + err.Error(),
-		})
-		return
-	}
+	user := c.MustGet("use")
+	use := user.(*utility.User)
 	fmt.Println(room_id)
 	if room_id == "" {
 		c.JSON(http.StatusOK, gin.H{
@@ -176,7 +155,7 @@ func ExitGroup(c *gin.Context) {
 		return
 	}
 
-	err = models.ExitGroupUser(use.Indently, room_id)
+	err := models.ExitGroupUser(use.Indently, room_id)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code": 1,

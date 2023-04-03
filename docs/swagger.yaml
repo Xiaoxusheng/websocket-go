@@ -107,6 +107,32 @@ paths:
       summary: 加入群聊接口
       tags:
         - 公共方法
+  /user/SetHeadPicture:
+    post:
+      consumes:
+        - multipart/form-data
+      description: file token为必填
+      parameters:
+        - description: 表单name
+          in: formData
+          name: HeadPicture
+          required: true
+          type: file
+        - description: token
+          in: header
+          name: token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: '{"account": "3169387148", "code": 200, "msg": "注册成功"}'
+          schema:
+            type: ""
+      summary: 上传头像接口
+      tags:
+        - 公共方法
   /user/delete:
     get:
       consumes:
@@ -139,11 +165,16 @@ paths:
         - application/json
       description: |-
         上传文件
-        file 为必填
+        file token为必填
       parameters:
         - description: 表单name
           in: formData
           name: file
+          required: true
+          type: file
+        - description: token
+          in: header
+          name: token
           required: true
           type: string
       produces:

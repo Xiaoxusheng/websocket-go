@@ -164,6 +164,45 @@ const docTemplate = `{
                 }
             }
         },
+        "/user/SetHeadPicture": {
+            "post": {
+                "description": "file token为必填",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "公共方法"
+                ],
+                "summary": "上传头像接口",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "表单name",
+                        "name": "HeadPicture",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"account\": \"3169387148\", \"code\": 200, \"msg\": \"注册成功\"}",
+                        "schema": {
+                            "type": ""
+                        }
+                    }
+                }
+            }
+        },
         "/user/delete": {
             "get": {
                 "description": "token 账号为必填",
@@ -205,7 +244,7 @@ const docTemplate = `{
         },
         "/user/file": {
             "post": {
-                "description": "上传文件\nfile 为必填",
+                "description": "上传文件\nfile token为必填",
                 "consumes": [
                     "application/json"
                 ],
@@ -218,10 +257,17 @@ const docTemplate = `{
                 "summary": "上传文件接口",
                 "parameters": [
                     {
-                        "type": "string",
+                        "type": "file",
                         "description": "表单name",
                         "name": "file",
                         "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "token",
+                        "name": "token",
+                        "in": "header",
                         "required": true
                     }
                 ],

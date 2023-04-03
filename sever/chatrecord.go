@@ -26,15 +26,8 @@ func ChatRecord(c *gin.Context) {
 	room_id := c.Query("room_id")
 	pageSize := c.DefaultQuery("pageSize", "1")
 	pageNumber := 20
-	token := c.GetHeader("token")
-	use, err := utility.ParseWithClaims(token)
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": 1,
-			"msg":  "2系统错误，" + err.Error(),
-		})
-		return
-	}
+	user := c.MustGet("use")
+	use := user.(*utility.User)
 	if room_id == "" {
 		c.JSON(http.StatusOK, gin.H{
 			"code": 1,
