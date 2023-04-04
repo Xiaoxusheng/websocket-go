@@ -60,7 +60,7 @@ func Login(c *gin.Context) {
 			c.JSON(http.StatusOK, gin.H{
 				"msg":   "登陆成功",
 				"code":  200,
-				"token": utility.Createtoken(getidently[0].Indently, username),
+				"token": utility.CreateToken(getidently[0].Indently, username),
 			})
 		} else {
 			c.JSON(http.StatusOK, gin.H{
@@ -189,6 +189,7 @@ func Userinfo(c *gin.Context) {
 		"msg":  "获取数据成功！",
 		"data": gin.H{
 			"data": username,
+			"ip":   c.MustGet("ip"),
 		},
 	})
 

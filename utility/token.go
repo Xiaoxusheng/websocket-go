@@ -15,7 +15,7 @@ type User struct {
 }
 
 // Createtoken 生成token
-func Createtoken(indently string, username string) string {
+func CreateToken(indently string, username string) string {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, &User{indently, username, &jwt.RegisteredClaims{ExpiresAt: jwt.NewNumericDate(time.Now().Add(24 * time.Hour)), Issuer: "test"}})
 	signedString, err := token.SignedString(Key)
 	if err != nil {

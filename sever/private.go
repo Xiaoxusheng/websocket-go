@@ -248,5 +248,4 @@ func GetUserOnline(c *gin.Context) {
 		})
 		return
 	}
-
 }

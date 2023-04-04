@@ -315,7 +315,7 @@ const docTemplate = `{
         },
         "/user/get_message": {
             "get": {
-                "description": "room_id token 为必填",
+                "description": "room_id token 为必填 pageSize默认值为1 选填",
                 "consumes": [
                     "multipart/form-data"
                 ],
@@ -340,6 +340,12 @@ const docTemplate = `{
                         "name": "token",
                         "in": "header",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "pageSize",
+                        "name": "pageSize",
+                        "in": "query"
                     }
                 ],
                 "responses": {

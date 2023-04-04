@@ -15,8 +15,9 @@ import (
 // @Summary 获取聊天记录接口
 // @Param room_id query string true "房间号"
 // @Param token header string true "token"
+// @Param pageSize query string false "pageSize"
 // @Schemes
-// @Description room_id token 为必填
+// @Description room_id token 为必填 pageSize默认值为1 选填
 // @Tags 公共方法
 // @Accept multipart/form-data
 // @Produce json
@@ -59,7 +60,7 @@ func ChatRecord(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"code": 1,
+		"code": 200,
 		"msg":  "获取数据成功！",
 		"data": gin.H{
 			"data": messages,

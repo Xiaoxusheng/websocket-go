@@ -25,7 +25,7 @@ func Router() *gin.Engine {
 	r.LoadHTMLGlob("view/*")
 
 	// 公共方法
-	User := r.Group("/user")
+	User := r.Group("/user", middleware.IPLimite())
 	docs.SwaggerInfo.BasePath = ""
 	r.MaxMultipartMemory = 32
 	{

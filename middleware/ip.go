@@ -6,6 +6,7 @@ import (
 
 func IPLimite() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		c.Set("ip", c.ClientIP())
 		//访问IP
 		//ip := c.ClientIP()
 		//token := c.GetHeader("token")

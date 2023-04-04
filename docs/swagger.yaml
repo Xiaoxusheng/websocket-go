@@ -215,7 +215,7 @@ paths:
     get:
       consumes:
         - multipart/form-data
-      description: room_id token 为必填
+      description: room_id token 为必填 pageSize默认值为1 选填
       parameters:
         - description: 房间号
           in: query
@@ -226,6 +226,10 @@ paths:
           in: header
           name: token
           required: true
+          type: string
+        - description: pageSize
+          in: query
+          name: pageSize
           type: string
       produces:
         - application/json
