@@ -10,6 +10,7 @@ import (
 type Message struct {
 	Idently          string `json:"idently"`
 	Message_id       int64  `json:"message_id"`
+	Message_type     string `json:"message_type"`
 	Message          string `json:"message"`
 	Room_idently     string `json:"room_idently"`
 	Messagesend_time int64  `json:"messagesend_time"`
@@ -20,6 +21,7 @@ type Messages struct {
 	Id               int    `json:"id"`
 	Idently          string `json:"idently"`
 	Message_id       int64  `json:"message_id"`
+	Message_type     string `json:"message_type"`
 	Message          string `json:"message"`
 	Room_idently     string `json:"room_idently"`
 	Messagesend_time int64  `json:"messagesend_time"`
@@ -38,7 +40,7 @@ func (m *Message) GetMessage() string {
 }
 
 func InsertMessage(message *Message) {
-	_, err := db.DB.Exec("insert into message(idently,message_id,message,room_idently,messagesend_time) value (?,?,?,?,?)", message.Idently, message.Message_id, message.Message, message.Room_idently, message.Messagesend_time)
+	_, err := db.DB.Exec("insert into message(idently,message_id,message,message_type,room_idently,messagesend_time) value (?,?,?,?,?,?)", message.Idently, message.Message_id, message.Message, message.Message_type, message.Room_idently, message.Messagesend_time)
 	if err != nil {
 		log.Println("INSERT ERR:", err)
 		return

@@ -66,7 +66,7 @@ func Websecket(c *gin.Context) {
 	defer ws.Close()
 	defer middleware.DelConsumerGroup(message.Room_idently)
 	for {
-		//获得数据
+		//获得消息数据
 		err := ws.ReadJSON(message)
 		if err != nil {
 			log.Println("1", err)
@@ -84,7 +84,7 @@ func Websecket(c *gin.Context) {
 		//log.Printf("recv: %v   p:%v", messageType, string(p))
 		//聊天记录记录
 		models.InsertMessage(&models.Message{
-			use.Indently, utility.GetMessageId(), message.Message, message.Room_idently, time.Now().Unix(),
+			use.Indently, utility.GetMessageId(), message.Message_type, message.Message, message.Room_idently, time.Now().Unix(),
 		})
 		//获取在线人数
 		ws := models.GetUserbyIdentlyRoomId(message.Room_idently)

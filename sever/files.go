@@ -47,19 +47,26 @@ func File(c *gin.Context) {
 				c.JSON(http.StatusOK, gin.H{
 					"msg":  "文件已经存在，请不要重复上传！",
 					"code": 0,
+					"url":  "http://127.0.0.1:8080/img/" + filename,
 				})
 				return
 			}
 		}
+		//index := strings.LastIndex(filename, ".")
+		//if index != -1 {
+		//	extension := filename[index+1:]
+		//	fmt.Println(extension)
+		//}
 		//上传指定目录
 		c.SaveUploadedFile(file, "./img/"+file.Filename)
+		log.Println(file.Filename)
 		filename = file.Filename
 
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"msg":  string(len(files)) + "个文件上传成功",
 		"code": 200,
-		"url":  "127.0.0.1:8080/img/" + filename,
+		"url":  "http://127.0.0.1:8080/img/" + filename,
 	})
 
 }
