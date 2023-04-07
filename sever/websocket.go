@@ -83,9 +83,10 @@ func Websecket(c *gin.Context) {
 		//middleware.CreateConsumerGroup(message.Room_idently)
 		//log.Printf("recv: %v   p:%v", messageType, string(p))
 		//聊天记录记录
-		models.InsertMessage(&models.Message{
+		message1 := &models.Message{
 			use.Indently, utility.GetMessageId(), message.Message_type, message.Message, message.Room_idently, time.Now().Unix(),
-		})
+		}
+		models.InsertMessage(message1)
 		//获取在线人数
 		ws := models.GetUserbyIdentlyRoomId(message.Room_idently)
 		//发送数据
@@ -107,7 +108,7 @@ func Websecket(c *gin.Context) {
 		//for i, i2 := range collection {
 		//
 		//}
-		messages, _ := json.Marshal(message)
+		messages, _ := json.Marshal(message1)
 		for _, w := range ws {
 			if cc, ok := Client[w.Useridently]; ok {
 				if err := cc.WriteMessage(websocket.TextMessage, []byte(messages)); err != nil {

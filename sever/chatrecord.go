@@ -37,6 +37,7 @@ func ChatRecord(c *gin.Context) {
 		return
 	}
 	mc := models.GetUserByUserindently(use.Indently)
+	//房间成员
 	fmt.Println(mc)
 	f := false
 	for _, res := range *mc {

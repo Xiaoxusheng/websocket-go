@@ -150,6 +150,7 @@ func DissolveGroup(room_id string) error {
 
 }
 
+// 房间成员
 func GetUserByUserindently(useridently string) *[]Userroom {
 	room := []Userroom{}
 	err := db.DB.Select(&room, "select * from user_room where useridently=?", useridently)

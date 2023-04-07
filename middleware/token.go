@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"Gin/utility"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
@@ -12,7 +11,6 @@ func TokenParse() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		token := c.GetHeader("token")
 		log.Println("token", token == "null")
-		fmt.Printf("%T", token)
 		if token == "null" || token == "" {
 			c.Abort()
 			c.JSON(http.StatusOK, gin.H{
