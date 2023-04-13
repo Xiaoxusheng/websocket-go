@@ -48,12 +48,13 @@ func InsertMessage(message *Message) {
 }
 
 func GetMessages(id string, pageSize string, pageNumber int) (*[]Messages, error) {
+	log.Println(pageSize, pageNumber)
 	messages := []Messages{}
 	pageSizes, err := strconv.Atoi(pageSize)
 	if err != nil {
 		return nil, err
 	}
-	err = db.DB.Select(&messages, "select * from message  where  room_idently=? order by messagesend_time desc limit  ?,? ", id, pageSizes-1, pageNumber)
+	err = db.DB.Select(&messages, "select * from message  where  room_idently=? order by messagesend_time desc limit  ?,? ", id, (pageSizes-1)*pageNumber, pageNumber)
 	if err != nil {
 		log.Println("SELECT ERR:", err)
 		return nil, err
