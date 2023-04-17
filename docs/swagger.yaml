@@ -53,6 +53,29 @@ paths:
       summary: 创建群聊接口
       tags:
         - 公共方法
+  /group/grouperlist:
+    get:
+      consumes:
+        - multipart/form-data
+      description: token 为必填
+      parameters:
+        - description: token
+          in: header
+          name: token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: "{\t\"code\": 200,\t\"data\": [ { \"roomidently\": \"3725963\",
+            \"useridently\": \"\", \"room_type\": \"group\", \"creaet_time\": 0, \"create_uesr\":
+            \"admin\", \"info\": \"小学生\" } ], \"msg\": \"获取数据成功！\" }"
+          schema:
+            type: string
+      summary: 群列表
+      tags:
+        - 公共方法
   /group/grouplist:
     get:
       consumes:

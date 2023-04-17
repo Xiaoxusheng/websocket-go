@@ -7,7 +7,6 @@ import (
 
 func main() {
 	r := router.Router()
-
 	//开启日志颜色
 	gin.ForceConsoleColor()
 	//静态文件

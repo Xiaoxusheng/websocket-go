@@ -82,6 +82,38 @@
         }
       }
     },
+    "/group/grouperlist": {
+      "get": {
+        "description": "token 为必填",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "公共方法"
+        ],
+        "summary": "群列表",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "token",
+            "name": "token",
+            "in": "header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{\t\"code\": 200,\t\"data\": [ { \"roomidently\": \"3725963\", \"useridently\": \"\", \"room_type\": \"group\", \"creaet_time\": 0, \"create_uesr\": \"admin\", \"info\": \"小学生\" } ], \"msg\": \"获取数据成功！\" }",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
     "/group/grouplist": {
       "get": {
         "description": "room_id  为必填",

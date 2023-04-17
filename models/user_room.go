@@ -160,3 +160,15 @@ func GetUserByUserindently(useridently string) *[]Userroom {
 	}
 	return &room
 }
+
+func GetGrouperList(userindently string) []Room_id {
+	grouplist := []Room_id{}
+	//SELECT a.column1, b.column2 FROM table1 as a INNER JOIN table2 as b ON a.id = b.id WHERE a.column3 = ?
+	err := db.DB.Select(&grouplist, "select distinct a.info,a.room_type,a.roomidently,a.create_uesr from room_id  as a,user_room as b where (a.roomidently =b.roomidently and a.useridently=? and a.room_type=?)", userindently, "group")
+	if err != nil {
+		log.Println(err)
+		return nil
+	}
+	return grouplist
+
+}

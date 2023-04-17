@@ -22,7 +22,7 @@ func Router() *gin.Engine {
 	config.AllowCredentials = true
 	r.Use(cors.New(config))
 	//html模板
-	r.LoadHTMLGlob("view/*")
+	//r.LoadHTMLGlob("view/*")
 
 	// 公共方法
 	User := r.Group("/user", middleware.IPLimite())
@@ -44,12 +44,13 @@ func Router() *gin.Engine {
 		User.POST("/SetHeadPicture", middleware.TokenParse(), server.SetHeadPicture)
 	}
 	// 群聊
-	Group := r.Group("/group")
+	Group := r.Group("/group", middleware.TokenParse())
 	{
 		Group.POST("/group", server.CreateGroup)
 		Group.GET("/join", server.JoinGroup)
 		Group.GET("/exit", server.ExitGroup)
 		Group.GET("/grouplist", server.GetGroupList)
+		Group.GET("/grouperlist", server.GetGrouperList)
 	}
 
 	// 管理员,

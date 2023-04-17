@@ -230,3 +230,38 @@ func GetGroupList(c *gin.Context) {
 		},
 	})
 }
+
+// GetGrouperList
+// PingExample godoc
+// 群聊
+// @Summary 群列表
+// @Param token header string true "token"
+// @Schemes
+// @Description  token 为必填
+// @Tags 公共方法
+// @Accept multipart/form-data
+// @Produce json
+//
+//	@Success 200 {string}  "{	"code": 200,	"data": [ { "roomidently": "3725963", "useridently": "", "room_type": "group", "creaet_time": 0, "create_uesr": "admin", "info": "小学生" } ], "msg": "获取数据成功！" }"
+//
+// @Router  /group/grouperlist   [get]
+func GetGrouperList(c *gin.Context) {
+	user := c.MustGet("use")
+	use := user.(*utility.User)
+	//fmt.Println(use.Indently)
+	grouplist := models.GetGrouperList(use.Indently)
+	if grouplist == nil {
+		c.JSON(http.StatusOK, gin.H{
+			"code": 1,
+			"msg":  "系统错误",
+		})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"msg":  "获取数据成功！",
+		"data": gin.H{
+			"data": grouplist,
+		},
+	})
+}

@@ -177,9 +177,9 @@ func DelPrivate(c *gin.Context) {
 func Friendlist(c *gin.Context) {
 	userinfo := c.MustGet("use")
 	use := userinfo.(*utility.User)
-	frieendlist := models.GetFriendList(use.Indently)
+	friendlist := models.GetFriendList(use.Indently)
 	user := make([]*utility.Userinfo, 0)
-	for _, userroom := range frieendlist {
+	for _, userroom := range friendlist {
 		userinfos, err := models.GetUsername(userroom.Friendidently)
 		if err != nil {
 			return
