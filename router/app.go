@@ -42,6 +42,7 @@ func Router() *gin.Engine {
 		User.GET("/html", server.Html)
 		User.GET("/online", middleware.TokenParse(), server.GetUserOnline)
 		User.POST("/SetHeadPicture", middleware.TokenParse(), server.SetHeadPicture)
+		User.GET("/recallchatrecord", middleware.TokenParse(), server.RecallChatRecord)
 	}
 	// 群聊
 	Group := r.Group("/group", middleware.TokenParse())

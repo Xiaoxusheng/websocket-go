@@ -39,6 +39,7 @@ func (m *Message) GetMessage() string {
 	return "message"
 }
 
+// 增加
 func InsertMessage(message *Message) {
 	_, err := db.DB.Exec("insert into message(idently,message_id,message,message_type,room_idently,messagesend_time) value (?,?,?,?,?,?)", message.Idently, message.Message_id, message.Message, message.Message_type, message.Room_idently, message.Messagesend_time)
 	if err != nil {
@@ -47,8 +48,8 @@ func InsertMessage(message *Message) {
 	}
 }
 
+// 查找
 func GetMessages(id string, pageSize string, pageNumber int) (*[]Messages, error) {
-	log.Println(pageSize, pageNumber)
 	messages := []Messages{}
 	pageSizes, err := strconv.Atoi(pageSize)
 	if err != nil {
@@ -60,4 +61,23 @@ func GetMessages(id string, pageSize string, pageNumber int) (*[]Messages, error
 		return nil, err
 	}
 	return &messages, nil
+}
+
+// 消息是否存在
+func GetMess(MessageId string) error {
+	messages := Messages{}
+	err := db.DB.Get(&messages, "select * from message  where message_id=?", MessageId)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// 撤回消息
+func DelMessage(MessageId string) error {
+	_, err := db.DB.Exec("delete from message where message_id=? ", MessageId)
+	if err != nil {
+		return err
+	}
+	return nil
 }

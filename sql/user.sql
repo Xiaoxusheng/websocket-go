@@ -9,6 +9,7 @@ create table user
     register_time timestamp     not null,
     use_status    int default 0 not null comment '0 表示用户正常 1表示禁用',
     account       varchar(10)   not null,
+    headpicture   varchar(45)   not null,
     constraint user_account_uindex
         unique (account),
     constraint user_email_uindex

@@ -196,45 +196,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/user/SetHeadPicture": {
-            "post": {
-                "description": "file token为必填",
-                "consumes": [
-                    "multipart/form-data"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "公共方法"
-                ],
-                "summary": "上传头像接口",
-                "parameters": [
-                    {
-                        "type": "file",
-                        "description": "表单name",
-                        "name": "HeadPicture",
-                        "in": "formData",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "token",
-                        "name": "token",
-                        "in": "header",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "{\"account\": \"3169387148\", \"code\": 200, \"msg\": \"注册成功\"}",
-                        "schema": {
-                            "type": ""
-                        }
-                    }
-                }
-            }
-        },
         "/user/delete": {
             "get": {
                 "description": "token 账号为必填",
@@ -349,7 +310,7 @@ const docTemplate = `{
             "get": {
                 "description": "room_id token 为必填 pageSize默认值为1 选填",
                 "consumes": [
-                    "multipart/form-data"
+                    "application/json"
                 ],
                 "produces": [
                     "application/json"
@@ -507,6 +468,45 @@ const docTemplate = `{
                 }
             }
         },
+        "/user/recallchatrecord": {
+            "get": {
+                "description": "message_id token 为必填",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "公共方法"
+                ],
+                "summary": "消息撤回接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "房间号",
+                        "name": "message_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":1,\"data\":{\"data\":[{\"id\":29,\"idently\":\"6a2a462c-a107-48ea-82e5-74e308327e6f\",\"message_id\":6858759,\"message\":\"你好，我是张三\",\"room_idently\":\"0820018\",\"messagesend_time\":1679052325},{\"id\":30,\"idently\":\"cacda2d3-4a77-4afa-94b5-6ff2c036d126\",\"message_id\":72843315,\"message\":\"你好，我是李四\",\"room_idently\":\"0820018\",\"messagesend_time\":1679052347},{\"id\":31,\"idently\":\"cacda2d3-4a77-4afa-94b5-6ff2c036d126\",\"message_id\":91900639,\"message\":\"你好，我是李四\",\"room_idently\":\"0820018\",\"messagesend_time\":1679054157},{\"id\":32,\"idently\":\"cacda2d3-4a77-4afa-94b5-6ff2c036d126\",\"message_id\":63367923,\"message\":\"你好，我是李四\",\"room_idently\":\"0820018\",\"messagesend_time\":1679054157},{\"id\":33,\"idently\":\"cacda2d3-4a77-4afa-94b5-6ff2c036d126\",\"message_id\":30613339,\"message\":\"你好，我是李四\",\"room_idently\":\"0820018\",\"messagesend_time\":1679054158}]},\"msg\":\"获取数据成功！\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/user/register": {
             "post": {
                 "description": "用户名 密码 邮箱为必填",
@@ -580,6 +580,45 @@ const docTemplate = `{
                         "description": "{ \"code\": \"530757\", \"msg\": \"获取验证码成功！\" }",
                         "schema": {
                             "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/setheadpicture": {
+            "post": {
+                "description": "file token为必填",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "公共方法"
+                ],
+                "summary": "上传头像接口",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "表单name",
+                        "name": "HeadPicture",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"account\": \"3169387148\", \"code\": 200, \"msg\": \"注册成功\"}",
+                        "schema": {
+                            "type": ""
                         }
                     }
                 }

@@ -130,32 +130,6 @@ paths:
       summary: 加入群聊接口
       tags:
         - 公共方法
-  /user/SetHeadPicture:
-    post:
-      consumes:
-        - multipart/form-data
-      description: file token为必填
-      parameters:
-        - description: 表单name
-          in: formData
-          name: HeadPicture
-          required: true
-          type: file
-        - description: token
-          in: header
-          name: token
-          required: true
-          type: string
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: '{"account": "3169387148", "code": 200, "msg": "注册成功"}'
-          schema:
-            type: ""
-      summary: 上传头像接口
-      tags:
-        - 公共方法
   /user/delete:
     get:
       consumes:
@@ -237,7 +211,7 @@ paths:
   /user/get_message:
     get:
       consumes:
-        - multipart/form-data
+        - application/json
       description: room_id token 为必填 pageSize默认值为1 选填
       parameters:
         - description: 房间号
@@ -342,6 +316,32 @@ paths:
       summary: 获取好友在线状态接口
       tags:
         - 公共方法
+  /user/recallchatrecord:
+    get:
+      consumes:
+        - application/json
+      description: message_id token 为必填
+      parameters:
+        - description: 房间号
+          in: query
+          name: message_id
+          required: true
+          type: string
+        - description: token
+          in: header
+          name: token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: '{"code":1,"data":{"data":[{"id":29,"idently":"6a2a462c-a107-48ea-82e5-74e308327e6f","message_id":6858759,"message":"你好，我是张三","room_idently":"0820018","messagesend_time":1679052325},{"id":30,"idently":"cacda2d3-4a77-4afa-94b5-6ff2c036d126","message_id":72843315,"message":"你好，我是李四","room_idently":"0820018","messagesend_time":1679052347},{"id":31,"idently":"cacda2d3-4a77-4afa-94b5-6ff2c036d126","message_id":91900639,"message":"你好，我是李四","room_idently":"0820018","messagesend_time":1679054157},{"id":32,"idently":"cacda2d3-4a77-4afa-94b5-6ff2c036d126","message_id":63367923,"message":"你好，我是李四","room_idently":"0820018","messagesend_time":1679054157},{"id":33,"idently":"cacda2d3-4a77-4afa-94b5-6ff2c036d126","message_id":30613339,"message":"你好，我是李四","room_idently":"0820018","messagesend_time":1679054158}]},"msg":"获取数据成功！"}'
+          schema:
+            type: string
+      summary: 消息撤回接口
+      tags:
+        - 公共方法
   /user/register:
     post:
       consumes:
@@ -392,6 +392,32 @@ paths:
           schema:
             type: string
       summary: 验证码接口
+      tags:
+        - 公共方法
+  /user/setheadpicture:
+    post:
+      consumes:
+        - multipart/form-data
+      description: file token为必填
+      parameters:
+        - description: 表单name
+          in: formData
+          name: HeadPicture
+          required: true
+          type: file
+        - description: token
+          in: header
+          name: token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: '{"account": "3169387148", "code": 200, "msg": "注册成功"}'
+          schema:
+            type: ""
+      summary: 上传头像接口
       tags:
         - 公共方法
   /user/userinfo:

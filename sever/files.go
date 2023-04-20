@@ -81,7 +81,7 @@ func File(c *gin.Context) {
 // @Accept multipart/form-data
 // @Produce json
 // @Success 200 { string } "{"account": "3169387148", "code": 200, "msg": "注册成功"}"
-// @Router  /user/SetHeadPicture      [post]
+// @Router  /user/setheadpicture      [post]
 func SetHeadPicture(c *gin.Context) {
 	use := c.MustGet("use")
 	user := use.(*utility.User)
