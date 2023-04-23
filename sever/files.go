@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 )
 
 // 上传文件
@@ -47,7 +48,7 @@ func File(c *gin.Context) {
 				c.JSON(http.StatusOK, gin.H{
 					"msg":  "文件已经存在，请不要重复上传！",
 					"code": 0,
-					"url":  "http://127.0.0.1:8080/img/" + filename,
+					"url":  "http://127.0.0.1:8080/img/" + file.Filename,
 				})
 				return
 			}
@@ -63,12 +64,12 @@ func File(c *gin.Context) {
 		filename = file.Filename
 
 	}
+
 	c.JSON(http.StatusOK, gin.H{
-		"msg":  string(len(files)) + "个文件上传成功",
+		"msg":  strconv.Itoa(len(files)) + "个文件上传成功",
 		"code": 200,
 		"url":  "http://127.0.0.1:8080/img/" + filename,
 	})
-
 }
 
 // SetHeadPicture
