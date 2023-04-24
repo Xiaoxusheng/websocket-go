@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"time"
 )
 
 // ChatRecord
@@ -117,12 +116,12 @@ func RecallChatRecord(c *gin.Context) {
 }
 
 func Html(c *gin.Context) {
-	times := time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), 0, 0, 0, 0, time.Local).Unix()
-	number, err := models.GetIPNumber(times)
-	if err != nil {
-		return
-	}
-	c.HTML(http.StatusOK, "index.tmpl", gin.H{
-		"iplist": number,
-	})
+	//times := time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), 0, 0, 0, 0, time.Local).Unix()
+	//number, err := models.GetIPNumber(times)
+	//if err != nil {
+	//	return
+	//}
+	//c.HTML(http.StatusOK, "index.tmpl", gin.H{
+	//	"iplist": number,
+	//})
 }

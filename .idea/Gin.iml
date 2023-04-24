@@ -13,5 +13,7 @@
     <orderEntry type="module" module-name="go-websocket" />
     <orderEntry type="module" module-name="go-websocket" />
     <orderEntry type="module" module-name="go设计模式" />
+    <orderEntry type="module" module-name="设计模式学习" />
+    <orderEntry type="module" module-name="design" />
   </component>
 </module>

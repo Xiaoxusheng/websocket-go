@@ -1,47 +1,73 @@
 package middleware
 
 import (
+	"Gin/models"
+	"Gin/utility"
 	"github.com/gin-gonic/gin"
+	"log"
+	"net/http"
+	"time"
 )
 
 func IPLimite() gin.HandlerFunc {
+
 	return func(c *gin.Context) {
+		var use *utility.User
 		c.Set("ip", c.ClientIP())
 		//访问IP
-		//ip := c.ClientIP()
-		//token := c.GetHeader("token")
-		//uses, err := utility.ParseWithClaims(token)
-		//if err != nil {
-		//	c.JSON(http.StatusOK, gin.H{
-		//		"code": 1,
-		//		"msg":  "系统错误，" + err.Error(),
-		//	})
-		//	return
-		//}
-		//err := models.InsertIpbyUser(&models.IPs{ip, time.Now().Unix(), c.Request.Header["User-Agent"][0]})
-		//if err != nil {
-		//	c.JSON(http.StatusOK, gin.H{
-		//		"code": 1,
-		//		"msg":  "系统错误！",
-		//	})
-		//	log.Println("insert err", err)
-		//	c.Abort()
-		//}
-		//time := time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), 0, 0, 0, 0, time.Local).Unix()
-		//fmt.Println(time)
-		//number, err := models.GetIPNumber(1679203619)
-		//if err != nil {
-		//	c.JSON(http.StatusOK, gin.H{
-		//		"code": 1,
-		//		"msg":  "系统错误！",
-		//	})
-		//	log.Println(err)
-		//	return
-		//}
-		//fmt.Println("number:", number)
-		//body := c.Request.Header["User-Agent"][0]
-		//fmt.Println(ip, body)
-		//
+		ip := c.ClientIP()
+		token := c.GetHeader("token")
+		if token == "" {
+			use = &utility.User{}
+			use.Indently = "No"
+		} else {
+			use, _ = utility.ParseWithClaims(token)
+		}
+
+		//查询是否为封杀ip
+		banIP := models.GetbanIp(ip)
+		if banIP {
+			//403(禁止)服务器拒绝请求
+			c.JSON(http.StatusOK, gin.H{
+				"code": 403,
+				"msg":  "您的帐户请求过于频繁，已经被封禁，请联系管理员",
+			})
+			c.Abort()
+			return
+		}
+		//插入ip数据
+		err := models.InsertIpbyUser(&models.IPs{ip, time.Now().Unix(), use.Indently})
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 1,
+				"msg":  "系统错误！",
+			})
+			log.Println("insert err", err)
+			c.Abort()
+			return
+		}
+		//查看次数
+		number, err := models.GetIPNumber(ip)
+		if err != nil {
+			log.Println("GetIPNumber", err)
+			c.Abort()
+			return
+		}
+		log.Println("IP请求次数:", number)
+
+		if number > 10 {
+			//加入黑名单
+			err := models.BanIP(&models.Bans{ip, time.Now().Format("2006-01-02 15:00:00")})
+			if err != nil {
+				log.Println("BanIP", err)
+				c.Abort()
+				return
+			}
+
+			//	封禁用户
+
+		}
+		c.Next()
 
 	}
 }
