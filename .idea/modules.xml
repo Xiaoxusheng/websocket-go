@@ -4,9 +4,11 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Gin.iml" filepath="$PROJECT_DIR$/.idea/Gin.iml" />
       <module fileurl="file://$PROJECT_DIR$/../QQbat_go/.idea/QQbat_go.iml" filepath="$PROJECT_DIR$/../QQbat_go/.idea/QQbat_go.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../design/.idea/design.iml" filepath="$PROJECT_DIR$/../design/.idea/design.iml" />
       <module fileurl="file://$PROJECT_DIR$/../go-websocket/.idea/go-websocket.iml" filepath="$PROJECT_DIR$/../go-websocket/.idea/go-websocket.iml" />
       <module fileurl="file://$PROJECT_DIR$/../goserve/.idea/goserve.iml" filepath="$PROJECT_DIR$/../goserve/.idea/goserve.iml" />
       <module fileurl="file://$PROJECT_DIR$/../go设计模式/.idea/go设计模式.iml" filepath="$PROJECT_DIR$/../go设计模式/.idea/go设计模式.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../设计模式学习/.idea/设计模式学习.iml" filepath="$PROJECT_DIR$/../设计模式学习/.idea/设计模式学习.iml" />
     </modules>
   </component>
 </project>

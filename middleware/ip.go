@@ -1,47 +1,54 @@
 package middleware
 
 import (
+	"Gin/models"
+	"Gin/utility"
 	"github.com/gin-gonic/gin"
+	"log"
+	"net/http"
+	"time"
 )
 
 func IPLimite() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Set("ip", c.ClientIP())
 		//访问IP
-		//ip := c.ClientIP()
-		//token := c.GetHeader("token")
-		//uses, err := utility.ParseWithClaims(token)
-		//if err != nil {
-		//	c.JSON(http.StatusOK, gin.H{
-		//		"code": 1,
-		//		"msg":  "系统错误，" + err.Error(),
-		//	})
-		//	return
-		//}
-		//err := models.InsertIpbyUser(&models.IPs{ip, time.Now().Unix(), c.Request.Header["User-Agent"][0]})
-		//if err != nil {
-		//	c.JSON(http.StatusOK, gin.H{
-		//		"code": 1,
-		//		"msg":  "系统错误！",
-		//	})
-		//	log.Println("insert err", err)
-		//	c.Abort()
-		//}
-		//time := time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), 0, 0, 0, 0, time.Local).Unix()
-		//fmt.Println(time)
-		//number, err := models.GetIPNumber(1679203619)
-		//if err != nil {
-		//	c.JSON(http.StatusOK, gin.H{
-		//		"code": 1,
-		//		"msg":  "系统错误！",
-		//	})
-		//	log.Println(err)
-		//	return
-		//}
-		//fmt.Println("number:", number)
-		//body := c.Request.Header["User-Agent"][0]
-		//fmt.Println(ip, body)
-		//
+		ip := c.ClientIP()
+		user := c.MustGet("use")
+		use := user.(*utility.User)
+		//查询是否为封杀ip
+		banIP := models.GetbanIp(ip)
+		if banIP {
+			c.Abort()
+			return
+		}
+		//插入ip数据
+		err := models.InsertIpbyUser(&models.IPs{ip, time.Now().Unix(), use.Indently})
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 1,
+				"msg":  "系统错误！",
+			})
+			log.Println("insert err", err)
+			c.Abort()
+			return
+		}
+		number, err := models.GetIPNumber(ip)
+		if err != nil {
+			c.Abort()
+			return
+		}
+
+		if number > 1500 {
+			//加入黑名单
+			err := models.BanIP(&models.Bans{ip, time.Now().Format("2006-01-02 15:00:00")})
+			if err != nil {
+				c.Abort()
+				return
+			}
+			//	封禁用户
+
+		}
 
 	}
 }

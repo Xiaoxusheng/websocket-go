@@ -1,6 +1,9 @@
 package models
 
-import "Gin/db"
+import (
+	"Gin/db"
+	"time"
+)
 
 type Ip struct {
 	Id          int    `json:"id"`
@@ -23,12 +26,18 @@ func InsertIpbyUser(ip *IPs) error {
 	return nil
 }
 
-// 查询每小时访问最频繁ip
-func GetIPNumber(time int64) (*[]Ip, error) {
-	iplist := []Ip{}
-	err := db.DB.Select(&iplist, "select *from ip where time>? ", time)
-	if err != nil {
-		return nil, err
+// 查询ip
+func GetIPNumber(ip string) (int, error) {
+	type numer struct {
+		num int `json:"num"`
 	}
-	return &iplist, nil
+
+	iplist := numer{}
+	today := time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), 0, 0, 0, 0, time.Now().Location()) // 今天0点的时间
+	timestamp := today.Unix()                                                                                      // 转换为时间戳
+	err := db.DB.Get(&iplist, "select count(ip) as num from ip  where time > ? and ip=?", timestamp, ip)
+	if err != nil {
+		return 0, err
+	}
+	return iplist.num, nil
 }
