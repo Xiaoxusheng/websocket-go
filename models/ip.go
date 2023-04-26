@@ -19,14 +19,14 @@ type IPs struct {
 }
 
 func InsertIpbyUser(ip *IPs) error {
-	_, err := db.DB.Exec("insert into ip(ip,time,useindently) value (?,?,?)", ip.Ip, ip.Time, ip.Useindently)
+	_, err := db.DB.Exec("insert into ip(ip,time,useindently) values (?,?,?)", ip.Ip, ip.Time, ip.Useindently)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-// 查询ip
+// 查询ip次数
 func GetIPNumber(ip string) (int, error) {
 	type numer struct {
 		Num int `json:"num"`

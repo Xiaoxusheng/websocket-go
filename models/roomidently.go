@@ -21,7 +21,7 @@ func (r Room_id) GetRoomidently() string {
 
 // 创建群聊
 func CreateRoom(id *Room_id) bool {
-	_, err := db.DB.Exec("insert into room_id(roomidently,useridently,room_type,creaet_time,create_uesr,info) value (?,?,?,?,?,?)", id.Roomidently, id.Useridently, id.Room_type, id.Creaet_time, id.Create_uesr, id.Info)
+	_, err := db.DB.Exec("insert into room_id(roomidently,useridently,room_type,creaet_time,create_uesr,info) values (?,?,?,?,?,?)", id.Roomidently, id.Useridently, id.Room_type, id.Creaet_time, id.Create_uesr, id.Info)
 	if err != nil {
 		log.Println("INSERT ERR:", err)
 		return false

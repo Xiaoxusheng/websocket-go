@@ -16,7 +16,7 @@ type SearchIP struct {
 
 // 封杀ip
 func BanIP(ip *Bans) error {
-	_, err := db.DB.Exec("insert into bans(ip,time) values (?,?)", ip.IP, ip.Time)
+	_, err := db.DB.Exec("insert into bans(ip,time) value (?,?)", ip.IP, ip.Time)
 	if err != nil {
 		return err
 	}

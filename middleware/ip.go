@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
+	"sync"
 	"time"
 )
 
@@ -13,6 +14,8 @@ func IPLimite() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 		var use *utility.User
+		var wg sync.WaitGroup
+		wg.Add(2)
 		c.Set("ip", c.ClientIP())
 		//访问IP
 		ip := c.ClientIP()
@@ -22,6 +25,10 @@ func IPLimite() gin.HandlerFunc {
 			use.Indently = "No"
 		} else {
 			use, _ = utility.ParseWithClaims(token)
+			if use == nil {
+				use = &utility.User{}
+				use.Indently = "token 过期"
+			}
 		}
 
 		//查询是否为封杀ip
@@ -36,37 +43,44 @@ func IPLimite() gin.HandlerFunc {
 			return
 		}
 		//插入ip数据
-		err := models.InsertIpbyUser(&models.IPs{ip, time.Now().Unix(), use.Indently})
-		if err != nil {
-			c.JSON(http.StatusOK, gin.H{
-				"code": 1,
-				"msg":  "系统错误！",
-			})
-			log.Println("insert err", err)
-			c.Abort()
-			return
-		}
-		//查看次数
-		number, err := models.GetIPNumber(ip)
-		if err != nil {
-			log.Println("GetIPNumber", err)
-			c.Abort()
-			return
-		}
-		log.Println("IP请求次数:", number)
-
-		if number > 10 {
-			//加入黑名单
-			err := models.BanIP(&models.Bans{ip, time.Now().Format("2006-01-02 15:00:00")})
+		go func() {
+			defer wg.Done()
+			err := models.InsertIpbyUser(&models.IPs{ip, time.Now().Unix(), use.Indently})
 			if err != nil {
-				log.Println("BanIP", err)
+				c.JSON(http.StatusOK, gin.H{
+					"code": 1,
+					"msg":  "系统错误！",
+				})
+				log.Println("insert err", err)
 				c.Abort()
 				return
 			}
+		}()
+		go func() {
+			defer wg.Done()
+			//查看次数
+			number, err := models.GetIPNumber(ip)
+			if err != nil {
+				log.Println("GetIPNumber", err)
+				c.Abort()
+				return
+			}
+			log.Println("IP请求次数:", number)
 
-			//	封禁用户
+			if number > 1000 {
+				//加入黑名单
+				err := models.BanIP(&models.Bans{ip, time.Now().Format("2006-01-02 15:00:00")})
+				if err != nil {
+					log.Println("BanIP", err)
+					c.Abort()
+					return
+				}
 
-		}
+				//	封禁用户
+
+			}
+		}()
+		wg.Wait()
 		c.Next()
 
 	}
