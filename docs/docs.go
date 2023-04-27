@@ -17,7 +17,7 @@ const docTemplate = `{
     "paths": {
         "/group/exit": {
             "get": {
-                "description": "room_id token 为必填",
+                "description": "account token 为必填",
                 "consumes": [
                     "multipart/form-data"
                 ],
@@ -32,7 +32,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "群号",
-                        "name": "room_id",
+                        "name": "account",
                         "in": "query",
                         "required": true
                     },
@@ -499,7 +499,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "{\"code\":1,\"data\":{\"data\":[{\"id\":29,\"idently\":\"6a2a462c-a107-48ea-82e5-74e308327e6f\",\"message_id\":6858759,\"message\":\"你好，我是张三\",\"room_idently\":\"0820018\",\"messagesend_time\":1679052325},{\"id\":30,\"idently\":\"cacda2d3-4a77-4afa-94b5-6ff2c036d126\",\"message_id\":72843315,\"message\":\"你好，我是李四\",\"room_idently\":\"0820018\",\"messagesend_time\":1679052347},{\"id\":31,\"idently\":\"cacda2d3-4a77-4afa-94b5-6ff2c036d126\",\"message_id\":91900639,\"message\":\"你好，我是李四\",\"room_idently\":\"0820018\",\"messagesend_time\":1679054157},{\"id\":32,\"idently\":\"cacda2d3-4a77-4afa-94b5-6ff2c036d126\",\"message_id\":63367923,\"message\":\"你好，我是李四\",\"room_idently\":\"0820018\",\"messagesend_time\":1679054157},{\"id\":33,\"idently\":\"cacda2d3-4a77-4afa-94b5-6ff2c036d126\",\"message_id\":30613339,\"message\":\"你好，我是李四\",\"room_idently\":\"0820018\",\"messagesend_time\":1679054158}]},\"msg\":\"获取数据成功！\"}",
+                        "description": "{}",
                         "schema": {
                             "type": "string"
                         }
