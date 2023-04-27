@@ -125,28 +125,28 @@ func JoinGroup(c *gin.Context) {
 // PingExample godoc
 // 退出群聊
 // @Summary 退出群聊接口
-// @Param room_id query string true "群号"
+// @Param account query string true "群号"
 // @Param token header string true "token"
 // @Schemes
-// @Description room_id token 为必填
+// @Description account token 为必填
 // @Tags 公共方法
 // @Accept multipart/form-data
 // @Produce json
 // @Success 200 {string}  "{"code":200,"msg":"退出成功！"}"
 // @Router  /group/exit  [get]
 func ExitGroup(c *gin.Context) {
-	room_id := c.Query("room_id")
+	account := c.Query("account")
+	log.Println(account)
 	user := c.MustGet("use")
 	use := user.(*utility.User)
-	fmt.Println(room_id)
-	if room_id == "" {
+	if account == "" {
 		c.JSON(http.StatusOK, gin.H{
 			"code": 1,
 			"msg":  "参数错误",
 		})
 		return
 	}
-	f := models.GetRoomId(room_id)
+	f := models.GetRoomId(account)
 	if !f {
 		c.JSON(http.StatusOK, gin.H{
 			"code": 1,
@@ -155,7 +155,7 @@ func ExitGroup(c *gin.Context) {
 		return
 	}
 
-	err := models.ExitGroupUser(use.Indently, room_id)
+	err := models.ExitGroupUser(use.Indently, account)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code": 1,
@@ -165,11 +165,11 @@ func ExitGroup(c *gin.Context) {
 	}
 	room := models.GetGroupLord(use.Indently)
 	if len(room) != 0 {
-		err := models.DissolveGroup(room_id)
+		err := models.DissolveGroup(account)
 		if err != nil {
 			return
 		}
-		models.DelGroup(room_id)
+		models.DelGroup(account)
 		c.JSON(http.StatusOK, gin.H{
 			"code": 200,
 			"msg":  "解散群聊成功！",

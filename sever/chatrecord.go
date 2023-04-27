@@ -80,7 +80,7 @@ func ChatRecord(c *gin.Context) {
 // @Tags 公共方法
 // @Accept json
 // @Produce json
-// @Success 200 {string}
+// @Success 200 {string}  "{}"
 // @Router   /user/recallchatrecord    [get]
 func RecallChatRecord(c *gin.Context) {
 	message_id := c.Query("message_id")
