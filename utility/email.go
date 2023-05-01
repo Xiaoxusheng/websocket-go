@@ -11,12 +11,12 @@ import (
 	"time"
 )
 
-func Sendemails(code string) {
+func Sendemails(emails, code string) {
 	e := email.NewEmail()
 	//发送者
 	e.From = "小学生 <2673893724@qq.com>"
 	//接收者
-	e.To = []string{"3096407768@qq.com"}
+	e.To = []string{emails}
 	//e.Bcc = []string{"test_bcc@example.com"}
 	//e.Cc = []string{"test_cc@example.com"}
 	//主题

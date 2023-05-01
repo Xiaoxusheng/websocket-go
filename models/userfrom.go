@@ -83,3 +83,15 @@ func SetHeadPicture(url, indently string) error {
 	}
 	return nil
 }
+
+// 根据用户名获取email
+func GetEmail(username string) (*User, error) {
+	var use User
+	//fmt.Println(useridently)
+	err := db.DB.Get(&use, "select * from user where username=?", username)
+	if err != nil {
+		//log.Println("查询出错:", err)
+		return nil, err
+	}
+	return &use, nil
+}

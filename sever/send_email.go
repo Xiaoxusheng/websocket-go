@@ -2,6 +2,7 @@ package server
 
 import (
 	"Gin/db"
+	"Gin/models"
 	"Gin/utility"
 	"context"
 	"fmt"
@@ -58,7 +59,13 @@ func Send_email(c *gin.Context) {
 			"msg":        "获取验证码成功！",
 			"email_code": code,
 		})
-		utility.Sendemails(code)
+		//查询email
+		getEmail, err := models.GetEmail(username)
+		if err != nil {
+			return
+		}
+		//发送验证码
+		utility.Sendemails(getEmail.Email, code)
 	} else {
 		result, err := db.Rdb.HMGet(ctx, username, "username", "time", "randString").Result()
 		fmt.Println(db.Rdb.TTL(ctx, username).Result())

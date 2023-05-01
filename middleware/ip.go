@@ -3,6 +3,7 @@ package middleware
 import (
 	"Gin/models"
 	"Gin/utility"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
@@ -20,7 +21,8 @@ func IPLimite() gin.HandlerFunc {
 		//访问IP
 		ip := c.ClientIP()
 		token := c.GetHeader("token")
-		if token == "" {
+		fmt.Println("token:", token)
+		if token == "" || token == "null" {
 			use = &utility.User{}
 			use.Indently = "No"
 		} else {
@@ -28,6 +30,9 @@ func IPLimite() gin.HandlerFunc {
 			if use == nil {
 				use = &utility.User{}
 				use.Indently = "token 过期"
+			} else {
+				use = &utility.User{}
+				use.Indently = "bug "
 			}
 		}
 

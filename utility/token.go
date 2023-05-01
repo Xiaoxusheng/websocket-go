@@ -27,6 +27,9 @@ func CreateToken(indently string, username string) string {
 // ParseWithClaims 验证token
 func ParseWithClaims(tokenString string) (*User, error) {
 	if tokenString == "" {
+		return nil, nil
+	}
+	if tokenString == "" {
 		return nil, errors.New("token不能为空！")
 	}
 	user := User{}

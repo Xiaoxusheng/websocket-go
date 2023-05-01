@@ -17,11 +17,12 @@ func Router() *gin.Engine {
 	//允许跨域
 	//r.Use(cors.Default())
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://localhost:8081"}
+	config.AllowOrigins = []string{"http://116.198.44.154:8080"}
 	config.AllowMethods = []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
 	config.AllowHeaders = []string{"Origin", "Content-Type", "token"}
 	config.AllowCredentials = true
 	r.Use(cors.New(config))
+
 	//html模板
 	//r.LoadHTMLGlob("view/*")
 
