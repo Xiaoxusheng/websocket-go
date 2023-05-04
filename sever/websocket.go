@@ -32,7 +32,7 @@ var Client = make(map[string]*websocket.Conn)
 // @Tags 公共方法
 // @Accept json
 // @Produce json
-// @Router   /user/websocket       [get]
+// @Router   /websocket       [get]
 func Websecket(c *gin.Context) {
 	message := &models.Message{}
 	token := c.Query("token")

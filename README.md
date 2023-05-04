@@ -31,7 +31,7 @@ http://localhost:8080/swagger/index.html#/
 | /user/send_code        |   GRET   |                    **username** (用户名)                     |          ×          |           无            |                              无                              | application/json | 获取验证码     |
 | /user/setheadpicture   |   POST   |                              无                              |          √          | **multipart/form-data** |                 表单的name为**HeadPicture**                  | application/json | 上传头像       |
 | /user/userinfo         |   GET    |                              无                              |          √          |           无            |                              无                              | application/json | 个人信息       |
-| /user/websocket        |   GET    |                       **token**(token)                       |          ×          |           无            |                              无                              | application/json | websocket连接  |
+| /websocket        |   GET    |                       **token**(token)                       |          ×          |           无            |                              无                              | application/json | websocket连接  |
 
 
 

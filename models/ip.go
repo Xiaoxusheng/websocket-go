@@ -10,16 +10,18 @@ type Ip struct {
 	Ip          string `json:"ip"`
 	Time        int64  `json:"time"`
 	Useindently string `json:"useindently"`
+	Path        string `json:"path"`
 }
 
 type IPs struct {
 	Ip          string `json:"ip"`
 	Time        int64  `json:"time"`
 	Useindently string `json:"useindently"`
+	Path        string `json:"path"`
 }
 
 func InsertIpbyUser(ip *IPs) error {
-	_, err := db.DB.Exec("insert into ip(ip,time,useindently) values (?,?,?)", ip.Ip, ip.Time, ip.Useindently)
+	_, err := db.DB.Exec("insert into ip(ip,time,useindently,path) values (?,?,?,?)", ip.Ip, ip.Time, ip.Useindently, ip.Path)
 	if err != nil {
 		return err
 	}

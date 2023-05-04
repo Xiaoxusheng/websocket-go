@@ -656,7 +656,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/user/websocket": {
+        "/websocket": {
             "get": {
                 "description": "token 为必填",
                 "consumes": [

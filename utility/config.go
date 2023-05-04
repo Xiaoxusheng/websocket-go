@@ -17,6 +17,11 @@ type Userinfo struct {
 	Room_type string      `json:"room_type"`
 }
 
+type Grop struct {
+	Info        string `json:"info"`
+	Create_uesr string `json:"create_uesr"`
+}
+
 /*{
    "room_idently":"123456",
    "message":"你好，我是张三",

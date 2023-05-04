@@ -50,7 +50,8 @@ func IPLimite() gin.HandlerFunc {
 		//插入ip数据
 		go func() {
 			defer wg.Done()
-			err := models.InsertIpbyUser(&models.IPs{ip, time.Now().Unix(), use.Indently})
+			fmt.Println(c.Request.URL)
+			err := models.InsertIpbyUser(&models.IPs{ip, time.Now().Unix(), use.Indently, c.Request.RequestURI})
 			if err != nil {
 				c.JSON(http.StatusOK, gin.H{
 					"code": 1,

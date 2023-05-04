@@ -442,7 +442,7 @@ paths:
       summary: 获取用户信息接口
       tags:
         - 公共方法
-  /user/websocket:
+  /websocket:
     get:
       consumes:
         - application/json

@@ -17,7 +17,7 @@ func Router() *gin.Engine {
 	//允许跨域
 	//r.Use(cors.Default())
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://116.198.44.154:8080"}
+	config.AllowOrigins = []string{"http://localhost:8081"}
 	config.AllowMethods = []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
 	config.AllowHeaders = []string{"Origin", "Content-Type", "token"}
 	config.AllowCredentials = true
@@ -36,7 +36,6 @@ func Router() *gin.Engine {
 		User.POST("/register", server.Register)
 		User.GET("/send_code", server.Send_email)
 		User.POST("/file", middleware.TokenParse(), server.File)
-		User.GET("/websocket", server.Websecket)
 		User.GET("/join", middleware.TokenParse(), server.JoinPrivate)
 		User.GET("/delete", middleware.TokenParse(), server.DelPrivate)
 		User.GET("friend_list", middleware.TokenParse(), server.Friendlist)
@@ -46,8 +45,9 @@ func Router() *gin.Engine {
 		User.POST("/SetHeadPicture", middleware.TokenParse(), server.SetHeadPicture)
 		User.GET("/recallchatrecord", middleware.TokenParse(), server.RecallChatRecord)
 	}
+	r.GET("/websocket", server.Websecket)
 	// 群聊
-	Group := r.Group("/group", middleware.TokenParse())
+	Group := r.Group("/group", middleware.TokenParse(), middleware.IPLimite())
 	{
 		Group.POST("/group", server.CreateGroup)
 		Group.GET("/join", server.JoinGroup)

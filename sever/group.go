@@ -218,6 +218,10 @@ func GetGroupList(c *gin.Context) {
 	for _, userroom := range Gouplist {
 		username, err := models.GetUsername(userroom.Useridently)
 		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": 1,
+				"msg":  "系统错误！" + err.Error(),
+			})
 			return
 		}
 		user = append(user, username)
@@ -257,11 +261,16 @@ func GetGrouperList(c *gin.Context) {
 		})
 		return
 	}
+
 	c.JSON(http.StatusOK, gin.H{
 		"code": 200,
 		"msg":  "获取数据成功！",
 		"data": gin.H{
-			"data": grouplist,
+			"data": &utility.Userinfo{
+				grouplist[0].Roomidently,
+				utility.Grop{grouplist[0].Info, grouplist[0].Create_uesr},
+				grouplist[0].Room_type,
+			},
 		},
 	})
 }
