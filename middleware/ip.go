@@ -26,13 +26,16 @@ func IPLimite() gin.HandlerFunc {
 			use = &utility.User{}
 			use.Indently = "No"
 		} else {
-			use, _ = utility.ParseWithClaims(token)
-			if use == nil {
+			use1, err := utility.ParseWithClaims(token)
+			if err != nil {
+				log.Println(err)
+			}
+			if use1 == nil {
 				use = &utility.User{}
 				use.Indently = "token 过期"
 			} else {
 				use = &utility.User{}
-				use.Indently = "bug "
+				use.Indently = use1.Indently
 			}
 		}
 
