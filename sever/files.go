@@ -89,6 +89,13 @@ func SetHeadPicture(c *gin.Context) {
 
 	// 单文件
 	file, _ := c.FormFile("HeadPicture")
+	if file.Filename == "" || file.Filename == "null" {
+		c.JSON(http.StatusOK, gin.H{
+			"code": 1,
+			"msg":  "表单name不能为空",
+		})
+		return
+	}
 	log.Println(file.Filename)
 	filelist, err1 := os.ReadDir("./img")
 	if err1 != nil {
@@ -101,8 +108,9 @@ func SetHeadPicture(c *gin.Context) {
 				"msg":  "不能使用相同头像!",
 				"code": 1,
 			})
+			break
 		}
-		break
+
 	}
 	//dst := "./" + file.Filename
 	//// 上传文件至指定的完整文件路径

@@ -87,7 +87,5 @@ func IPLimite() gin.HandlerFunc {
 			}
 		}()
 		wg.Wait()
-		c.Next()
-
 	}
 }

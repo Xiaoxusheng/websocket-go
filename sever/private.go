@@ -33,6 +33,17 @@ func JoinPrivate(c *gin.Context) {
 		})
 		return
 	}
+	//验证是否为自己账号
+	info, err := models.GetUsername(use.Indently)
+	if err != nil {
+		return
+	}
+	if info.Account == account {
+		c.JSON(http.StatusOK, gin.H{
+			"code": 1,
+			"msg":  "账号不能为本人账号！",
+		})
+	}
 	//验证添加的好友是否存在
 	u, e := models.GetUserByaccount(account)
 	if e != nil {
@@ -55,7 +66,7 @@ func JoinPrivate(c *gin.Context) {
 	}
 	//房间号
 	id := utility.GetRoomId()
-	err := models.InsertUseridently(&models.User_room{use.Indently, id, time.Now().Unix(), time.Now().Unix(), "private", u.Indently})
+	err = models.InsertUseridently(&models.User_room{use.Indently, id, time.Now().Unix(), time.Now().Unix(), "private", u.Indently})
 	if err != nil {
 		log.Println("1", err)
 		c.JSON(http.StatusOK, gin.H{
