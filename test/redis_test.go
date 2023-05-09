@@ -37,10 +37,9 @@ func TestRedis(t *testing.T) {
 	//}
 	//fmt.Println(result)
 	//if err != nil {
-	//	log.Println(err)
+	//	log.Println(err)`
 	//	return
 	//}
-
 	// 向流中添加一些数据
 	for i := 1; i <= 10; i++ {
 		fmt.Println(i)
