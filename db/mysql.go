@@ -18,7 +18,8 @@ func init() {
 	}
 	err = database.Ping()
 	if err != nil {
-		panic(err.Error()) // proper error handling instead of panic in your app
+		//panic(err.Error()) // proper error handling instead of panic in your app
+		log.Panicln("mysql数据库连接失败" + err.Error())
 	}
 	/*
 		database.SetConnMaxLifetime()需要确保在 MySQL 服务器、操作系统或其他中间件关闭连接之前，驱动程序安全地关闭连接。
