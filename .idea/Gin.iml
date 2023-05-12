@@ -15,5 +15,7 @@
     <orderEntry type="module" module-name="go设计模式" />
     <orderEntry type="module" module-name="设计模式学习" />
     <orderEntry type="module" module-name="design" />
+    <orderEntry type="module" module-name="Bookkeeping_book" />
+    <orderEntry type="module" module-name="web" />
   </component>
 </module>

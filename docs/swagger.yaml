@@ -299,8 +299,13 @@ paths:
     get:
       consumes:
         - application/json
-      description: account 为必填
+      description: account token 为必填
       parameters:
+        - description: token
+          in: header
+          name: token
+          required: true
+          type: string
         - description: account
           in: query
           name: account

@@ -427,7 +427,7 @@
     },
     "/user/online": {
       "get": {
-        "description": "account 为必填",
+        "description": "account token 为必填",
         "consumes": [
           "application/json"
         ],
@@ -439,6 +439,13 @@
         ],
         "summary": "获取好友在线状态接口",
         "parameters": [
+          {
+            "type": "string",
+            "description": "token",
+            "name": "token",
+            "in": "header",
+            "required": true
+          },
           {
             "type": "string",
             "description": "account",

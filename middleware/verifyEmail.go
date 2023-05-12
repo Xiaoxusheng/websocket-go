@@ -36,6 +36,7 @@ func VerifyEmail() gin.HandlerFunc {
 				"code": 1,
 			})
 			c.Abort()
+			return
 		}
 		if hset[2] == code {
 			c.Set("status", 200)

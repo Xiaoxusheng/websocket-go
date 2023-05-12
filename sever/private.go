@@ -214,9 +214,10 @@ func Friendlist(c *gin.Context) {
 // 好友在线状态
 // PingExample godoc
 // @Summary  获取好友在线状态接口
+// @Param token header string true "token"
 // @Param account query string true "account"
 // @Schemes
-// @Description  account 为必填
+// @Description  account token 为必填
 // @Tags 公共方法
 // @Accept json
 // @Produce json
