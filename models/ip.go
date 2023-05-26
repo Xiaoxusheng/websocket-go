@@ -33,7 +33,6 @@ func GetIPNumber(ip string) (int, error) {
 	type numer struct {
 		Num int `json:"num"`
 	}
-
 	iplist := numer{}
 	today := time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), 0, 0, 0, 0, time.Now().Location()) // 今天0点的时间
 	timestamp := today.Unix()                                                                                      // 转换为时间戳
