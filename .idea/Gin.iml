@@ -17,5 +17,6 @@
     <orderEntry type="module" module-name="design" />
     <orderEntry type="module" module-name="Bookkeeping_book" />
     <orderEntry type="module" module-name="web" />
+    <orderEntry type="module" module-name="book" />
   </component>
 </module>
